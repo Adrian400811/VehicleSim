@@ -16,6 +16,9 @@ public abstract class Vehicle extends SuperSmoothMover
     protected VehicleSpawner origin;
     protected int followingDistance;
     protected int myLaneNumber;
+    protected boolean towing;
+    protected boolean towed;
+    protected Vehicle tower;
 
     protected abstract boolean checkHitPedestrian ();
 
@@ -24,6 +27,7 @@ public abstract class Vehicle extends SuperSmoothMover
         // about which lane I'm in and which direction I should face
         this.origin = origin;
         moving = true;
+        towing = false;
         // ask the Spawner that spawned me what my lane number is
         myLaneNumber = origin.getLaneNumber();
         // Determine if this lane is facing towards the right and
@@ -67,12 +71,21 @@ public abstract class Vehicle extends SuperSmoothMover
      * - subclass' act() method can invoke super.act() to call this, as is demonstrated here.
      */
     public void act () {
-        
-        drive(); 
+        if (moving || towed) {
+            drive(towed, tower);
+        }
+         
+        if (towing) {
+            
+        }
         if (!checkHitPedestrian()){
             repelPedestrians();
         }
-
+        
+        if(checkCrash() && moving){
+            explode();
+        }
+        
         if (checkEdge()){
             getWorld().removeObject(this);
             return;
@@ -103,6 +116,23 @@ public abstract class Vehicle extends SuperSmoothMover
         return false;
     }
 
+    public boolean checkCrash() {
+        Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
+        if (collidingObject != null && !towing){
+            return true;
+        }
+        return false;
+    }
+    
+    public void explode() {
+        moving = false;
+        for (;speed > 0; speed += -1) {
+            move (speed * direction);
+        }
+        int carX = getX();
+        int carY = getY();
+    }
+    
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)
     public void repelPedestrians() {
         ArrayList<Pedestrian> pedsTouching = (ArrayList<Pedestrian>)getIntersectingObjects(Pedestrian.class);
@@ -128,79 +158,61 @@ public abstract class Vehicle extends SuperSmoothMover
      * @since February 2023
      */
     public void pushAwayFromObjects(ArrayList<Actor> nearbyObjects, double minDistance) {
-    // Get the current position of this actor
-    int currentX = getX();
-    int currentY = getY();
-
-    // Iterate through the nearby objects
-    for (Actor object : nearbyObjects) {
-        // Get the position and bounding box of the nearby object
-        int objectX = object.getX();
-        int objectY = object.getY();
-        int objectWidth = object.getImage().getWidth();
-        int objectHeight = object.getImage().getHeight();
-
-        // Calculate the distance between this actor and the nearby object's bounding oval
-        double distance = Math.sqrt(Math.pow(currentX - objectX, 2) + Math.pow(currentY - objectY, 2));
-
-        // Calculate the effective radii of the bounding ovals
-        double thisRadius = Math.max(getImage().getWidth() / 2.0, getImage().getHeight() / 2.0);
-        double objectRadius = Math.max(objectWidth / 2.0, objectHeight / 2.0);
-
-        // Check if the distance is less than the sum of the radii
-        if (distance < (thisRadius + objectRadius + minDistance)) {
-            // Calculate the direction vector from this actor to the nearby object
-            int deltaX = objectX - currentX;
-            int deltaY = objectY - currentY;
-
-            // Calculate the unit vector in the direction of the nearby object
-            double length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            double unitX = deltaX / length;
-            double unitY = deltaY / length;
-
-            // Calculate the amount by which to push the nearby object
-            double pushAmount = (thisRadius + objectRadius + minDistance) - distance;
-
-            // Update the position of the nearby object to push it away
-            
-            object.setLocation(objectX, objectY + (int)(pushAmount * unitY));
-            
-            // 2d version, allows pushing on x and y axis, commented out for now but it works, just not the
-            // effect I'm after:
-            //object.setLocation(objectX + (int)(pushAmount * unitX), objectY + (int)(pushAmount * unitY));
+        // Get the current position of this actor
+        int currentX = getX();
+        int currentY = getY();
+    
+        // Iterate through the nearby objects
+        for (Actor object : nearbyObjects) {
+            // Get the position and bounding box of the nearby object
+            int objectX = object.getX();
+            int objectY = object.getY();
+            int objectWidth = object.getImage().getWidth();
+            int objectHeight = object.getImage().getHeight();
+    
+            // Calculate the distance between this actor and the nearby object's bounding oval
+            double distance = Math.sqrt(Math.pow(currentX - objectX, 2) + Math.pow(currentY - objectY, 2));
+    
+            // Calculate the effective radii of the bounding ovals
+            double thisRadius = Math.max(getImage().getWidth() / 2.0, getImage().getHeight() / 2.0);
+            double objectRadius = Math.max(objectWidth / 2.0, objectHeight / 2.0);
+    
+            // Check if the distance is less than the sum of the radii
+            if (distance < (thisRadius + objectRadius + minDistance)) {
+                // Calculate the direction vector from this actor to the nearby object
+                int deltaX = objectX - currentX;
+                int deltaY = objectY - currentY;
+    
+                // Calculate the unit vector in the direction of the nearby object
+                double length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                double unitX = deltaX / length;
+                double unitY = deltaY / length;
+    
+                // Calculate the amount by which to push the nearby object
+                double pushAmount = (thisRadius + objectRadius + minDistance) - distance;
+    
+                // Update the position of the nearby object to push it away
+                
+                object.setLocation(objectX, objectY + (int)(pushAmount * unitY));
+                
+                // 2d version, allows pushing on x and y axis, commented out for now but it works, just not the
+                // effect I'm after:
+                //object.setLocation(objectX + (int)(pushAmount * unitX), objectY + (int)(pushAmount * unitY));
+            }
         }
     }
-}
 
-    
-   
     /**
      * Method that deals with movement. Speed can be set by individual subclasses in their constructors
      */
-    public void drive() 
+    public void drive(boolean towed, Vehicle tower) 
     {
-        // Ahead is a generic vehicle - we don't know what type BUT
-        // since every Vehicle "promises" to have a getSpeed() method,
-        // we can call that on any vehicle to find out it's speed
-        Vehicle ahead = (Vehicle) getOneObjectAtOffset (direction * (int)(speed + getImage().getWidth()/2 + 6), 0, Vehicle.class);
-        double otherVehicleSpeed = -1;
-        if (ahead != null) {
-            
-            otherVehicleSpeed = ahead.getSpeed();
+        if (towing && tower != null) {
+            speed = tower.getSpeed();
         }
-
-        // Various things that may slow down driving speed 
-        // You can ADD ELSE IF options to allow other 
-        // factors to reduce driving speed.
-
-        if (otherVehicleSpeed >= 0 && otherVehicleSpeed < maxSpeed){ // Vehicle ahead is slower?
-            speed = otherVehicleSpeed;
+        if (towing && tower == null) {
+            speed = maxSpeed;
         }
-
-        else {
-            speed = maxSpeed; // nothing impeding speed, so go max speed
-        }
-
         move (speed * direction);
     }   
 
@@ -209,8 +221,15 @@ public abstract class Vehicle extends SuperSmoothMover
      * if a faster vehicle is ahead in the lane.
      */
     public double getSpeed(){
-        if (moving)
+        if (moving){
             return speed;
+        }
         return 0;
+    }
+    
+    public void getTowed(Vehicle towtruck) {
+        towing = true;
+        towed = true;
+        tower = towtruck;
     }
 }
