@@ -103,13 +103,15 @@ public class VehicleWorld extends World
         int lane = Greenfoot.getRandomNumber(laneCount);
         if (Greenfoot.getRandomNumber (laneCount * 10) == 0 && 
             !laneSpawners[lane].isTouchingVehicle()){
-            int vehicleType = Greenfoot.getRandomNumber(3);
+            int vehicleType = Greenfoot.getRandomNumber(4);
             if (vehicleType == 0){
                 addObject(new Car(laneSpawners[lane]), 0, 0);
             } else if (vehicleType == 1){
-                addObject(new Truck(laneSpawners[lane]), 0, 0);
+                addObject(new Bus(laneSpawners[lane]), 0, 0);
             } else if (vehicleType == 2){
                 addObject(new Ambulance(laneSpawners[lane]), 0, 0);
+            } else if (vehicleType == 3){
+                addObject(new Truck(laneSpawners[lane]), 0, 0);
             }
         }
 

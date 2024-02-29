@@ -75,9 +75,6 @@ public abstract class Vehicle extends SuperSmoothMover
             drive(towed, tower);
         }
          
-        if (towing) {
-            
-        }
         if (!checkHitPedestrian()){
             repelPedestrians();
         }
