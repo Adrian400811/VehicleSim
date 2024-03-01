@@ -23,11 +23,11 @@ public class Truck extends Vehicle
     public void act()
     {
         Vehicle ahead = (Vehicle) getOneObjectAtOffset (
-         direction * (int)(speed + getImage().getWidth()/2 + 6), 0, Vehicle.class);
-        super.act();
+         direction * (int)(speed + getImage().getWidth()/2 + 3), 0, Vehicle.class);
         if(ahead != null && detectCrash(ahead)){
             tow(ahead);
         }
+        super.act();
     }
 
     public boolean checkHitPedestrian () {

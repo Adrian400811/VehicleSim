@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * The Ambulance subclass
@@ -19,11 +20,23 @@ public class Ambulance extends Vehicle
     public void act()
     {
         super.act();
-        
+        // killPedestrian();
     }
 
     public boolean checkHitPedestrian () {
-        // currently empty
         return false;
+    }
+    
+    public void killPedestrian() {
+        ArrayList<Pedestrian> pedsTouching = (ArrayList<Pedestrian>)getIntersectingObjects(Pedestrian.class);
+        
+        // this works, but doesn't ignore knocked down Pedestrians
+        //actorsTouching.addAll(pedsTouching);
+        for (Pedestrian p : pedsTouching){
+            if (!p.isAwake()){
+                getWorld().removeObject(p);
+                pedsTouching.remove(p);
+            }
+        }
     }
 }

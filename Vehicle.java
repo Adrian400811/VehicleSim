@@ -71,8 +71,16 @@ public abstract class Vehicle extends SuperSmoothMover
      * - subclass' act() method can invoke super.act() to call this, as is demonstrated here.
      */
     public void act () {
-        if (moving || towed) {
-            drive(towed, tower);
+        if (moving) {
+            drive();
+        }
+        
+        if (towed) {
+            if(tower != null){
+                attachTower(tower);
+            } else {
+                getWorld().removeObject(this);
+            }
         }
          
         if (!checkHitPedestrian()){
@@ -121,9 +129,24 @@ public abstract class Vehicle extends SuperSmoothMover
         return false;
     }
     
+    public void attachTower(Vehicle tower) {
+        try {
+            int towX = tower.getX();
+            int selfX = getX();
+            if ((direction * towX) > (direction * selfX)){
+                move((direction * towX) - (direction*selfX));
+            }
+        } catch(Exception e) {
+            if (e.toString() == "java.lang.IllegalStateException: Actor has been removed from the world.") {
+                getWorld().removeObject(this);
+            }
+        }
+    }
+    
     public void explode() {
         moving = false;
-        for (;speed > 0; speed += -1) {
+        int currentSpeed = (int) getSpeed();
+        for (;currentSpeed > 0; speed += -1) {
             move (speed * direction);
         }
         int carX = getX();
@@ -202,14 +225,8 @@ public abstract class Vehicle extends SuperSmoothMover
     /**
      * Method that deals with movement. Speed can be set by individual subclasses in their constructors
      */
-    public void drive(boolean towed, Vehicle tower) 
+    public void drive() 
     {
-        if (towing && tower != null) {
-            speed = tower.getSpeed();
-        }
-        if (towing && tower == null) {
-            speed = maxSpeed;
-        }
         move (speed * direction);
     }   
 
