@@ -19,8 +19,8 @@ public class Ambulance extends Vehicle
      */
     public void act()
     {
+        killPedestrian();
         super.act();
-        // killPedestrian();
     }
 
     public boolean checkHitPedestrian () {
@@ -28,15 +28,12 @@ public class Ambulance extends Vehicle
     }
     
     public void killPedestrian() {
-        ArrayList<Pedestrian> pedsTouching = (ArrayList<Pedestrian>)getIntersectingObjects(Pedestrian.class);
+        Pedestrian p = (Pedestrian) getOneIntersectingObject(Pedestrian.class);
         
         // this works, but doesn't ignore knocked down Pedestrians
         //actorsTouching.addAll(pedsTouching);
-        for (Pedestrian p : pedsTouching){
-            if (!p.isAwake()){
-                getWorld().removeObject(p);
-                pedsTouching.remove(p);
-            }
+        if (p != null && !p.isAwake()){
+            getWorld().removeObject(p);
         }
     }
 }

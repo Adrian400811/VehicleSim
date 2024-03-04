@@ -97,6 +97,14 @@ public class VehicleSpawner extends Actor
     public boolean isTouchingVehicle () {
         return this.isTouching(Vehicle.class);
     }
+    
+    public boolean checkPileUp() {
+        Vehicle v = (Vehicle) getOneIntersectingObject(Vehicle.class);
+        if (v != null && !v.isNotCrashed()){
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Get the lane number (0 indexed) that this VehicleSpawner represents.
@@ -107,5 +115,9 @@ public class VehicleSpawner extends Actor
      */
     public int getLaneNumber(){
         return this.laneNumber;
+    }
+    
+    public int getHeight(){
+        return this.height;
     }
 }

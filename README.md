@@ -23,6 +23,7 @@ Open directory in Greenfoot, press Run
 
 ## Planning
 See [Progress Tracker](https://github.com/Adrian400811/VehicleSim/issues/1)
+
 TL;DR: Car crashes, tow trucks, people screaming, better UI, allow customizing.
 
 ## Authors
@@ -31,4 +32,5 @@ Modified: Adrian400811
 
 ## Credits
 Vehicle Sprites: [Awesome Car Pack - UnLucky Studio (Sujit Yadav)](https://unluckystudio.com/game-art-giveaway-7-top-down-vehicles-sprites-pack/)
+
 Explosion: [Explosion - pixelartmaker.com](https://pixelartmaker.com/art/695c3a296d3fc8c)

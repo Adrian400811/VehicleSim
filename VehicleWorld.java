@@ -101,7 +101,11 @@ public class VehicleWorld extends World
     private void spawn () {
         // Chance to spawn a vehicle
         int lane = Greenfoot.getRandomNumber(laneCount);
-        if (Greenfoot.getRandomNumber (laneCount * 10) == 0 && 
+        if (laneSpawners[lane].checkPileUp()){
+            addObject(new UltimateBulldozer(laneSpawners[lane]), 0, 0);
+        }
+        
+        if (Greenfoot.getRandomNumber (laneCount * 5) == 0 && 
             !laneSpawners[lane].isTouchingVehicle()){
             int vehicleType = Greenfoot.getRandomNumber(4);
             if (vehicleType == 0){

@@ -246,4 +246,8 @@ public abstract class Vehicle extends SuperSmoothMover
         towed = true;
         tower = towtruck;
     }
+    
+    public boolean isNotCrashed() {
+        return moving;
+    }
 }

@@ -9,6 +9,8 @@ public class Pedestrian extends SuperSmoothMover
     private double maxSpeed;
     private int direction; // direction is always -1 or 1, for moving down or up, respectively
     private boolean awake, entering;
+    private GreenfootSound scream = new GreenfootSound("sounds/Wilhelm-Scream.mp3");
+    
     public Pedestrian(int direction) {
         // choose a random speed
         maxSpeed = Math.random() * 2 + 1;
@@ -47,6 +49,7 @@ public class Pedestrian extends SuperSmoothMover
         speed = 0;
         setRotation (direction * 90);
         awake = false;
+        scream.play();
     }
 
     /**
