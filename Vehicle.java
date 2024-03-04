@@ -19,6 +19,8 @@ public abstract class Vehicle extends SuperSmoothMover
     protected boolean towing;
     protected boolean towed;
     protected Vehicle tower;
+    protected GreenfootImage explodeImg = new GreenfootImage("images/explode.png");
+    protected GreenfootSound explodeSfx = new GreenfootSound("sounds/explode.mp3");
 
     protected abstract boolean checkHitPedestrian ();
 
@@ -88,7 +90,7 @@ public abstract class Vehicle extends SuperSmoothMover
         }
         
         if(checkCrash() && moving){
-            explode();
+            crash();
         }
         
         if (checkEdge()){
@@ -133,7 +135,7 @@ public abstract class Vehicle extends SuperSmoothMover
         try {
             int towX = tower.getX();
             int selfX = getX();
-            if ((direction * towX) > (direction * selfX)){
+            if ((direction * towX)-100 > (direction * selfX)){
                 move((direction * towX) - (direction*selfX));
             }
         } catch(Exception e) {
@@ -143,7 +145,7 @@ public abstract class Vehicle extends SuperSmoothMover
         }
     }
     
-    public void explode() {
+    public void crash() {
         moving = false;
         int currentSpeed = (int) getSpeed();
         for (;currentSpeed > 0; speed += -1) {
@@ -151,6 +153,12 @@ public abstract class Vehicle extends SuperSmoothMover
         }
         int carX = getX();
         int carY = getY();
+    }
+    
+    public void explode() {
+        setImage(explodeImg);
+        explodeSfx.play();
+        getWorld().removeObject(this);
     }
     
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)

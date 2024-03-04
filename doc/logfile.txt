@@ -13,23 +13,44 @@ Class documentation
 -source
 17
 -classpath
-/opt/greenfoot/greenfoot.jar:/opt/greenfoot/javafx-base-20.0.1-linux.jar:/opt/greenfoot/javafx-base-20.0.1.jar:/opt/greenfoot/javafx-controls-20.0.1-linux.jar:/opt/greenfoot/javafx-controls-20.0.1.jar:/opt/greenfoot/javafx-fxml-20.0.1-linux.jar:/opt/greenfoot/javafx-graphics-20.0.1-linux.jar:/opt/greenfoot/javafx-graphics-20.0.1.jar:/opt/greenfoot/javafx-media-20.0.1-linux.jar:/opt/greenfoot/javafx-media-20.0.1.jar:/opt/greenfoot/javafx-swing-20.0.1-linux.jar:/opt/greenfoot/javafx-web-20.0.1-linux.jar:/opt/greenfoot/junit-4.12.jar:/opt/greenfoot/junit-jupiter-5.5.2.jar:/opt/greenfoot/junit-jupiter-api-5.5.2.jar:/opt/greenfoot/junit-jupiter-engine-5.5.2.jar:/opt/greenfoot/junit-jupiter-params-5.5.2.jar:/opt/greenfoot/junit-platform-commons-1.5.2.jar:/opt/greenfoot/junit-platform-engine-1.5.2.jar:/opt/greenfoot/junit-platform-launcher-1.5.2.jar:/opt/greenfoot/junit-platform-suite-api-1.5.2.jar:/opt/greenfoot/junit-vintage-engine-5.5.2.jar:/opt/greenfoot/hamcrest-core-1.3.jar:/opt/greenfoot/opentest4j-1.2.0.jar:/opt/greenfoot/bluej.jar:/opt/greenfoot/classgraph-4.8.90.jar:/opt/greenfoot/diffutils-1.2.1.jar:/opt/greenfoot/commons-logging-1.2.jar:/opt/greenfoot/jl1.0.1.jar:/opt/greenfoot/opencsv-2.3.jar:/opt/greenfoot/opencsv-2.4.jar:/opt/greenfoot/xom-1.3.7.jar:/opt/greenfoot/lang-stride.jar:/opt/greenfoot/nsmenufx-2.1.8.jar:/opt/greenfoot/wellbehavedfx-0.3.3.jar:/opt/greenfoot/guava-17.0.jar:/opt/greenfoot/simple-png-0.2.0.jar:/opt/greenfoot/simple-png-javafx-0.2.0.jar:/opt/greenfoot/httpclient-4.5.13.jar:/opt/greenfoot/httpcore-4.4.13.jar:/opt/greenfoot/httpmime-4.1.1.jar:/opt/greenfoot/javafx/javafx.base.jar:/opt/greenfoot/javafx/javafx.controls.jar:/opt/greenfoot/javafx/javafx.fxml.jar:/opt/greenfoot/javafx/javafx.graphics.jar:/opt/greenfoot/javafx/javafx.media.jar:/opt/greenfoot/javafx/javafx.properties.jar:/opt/greenfoot/javafx/javafx.swing.jar:/opt/greenfoot/javafx/javafx.web.jar:/run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim
+/opt/greenfoot/greenfoot.jar:/opt/greenfoot/javafx-base-20.0.1-linux.jar:/opt/greenfoot/javafx-base-20.0.1.jar:/opt/greenfoot/javafx-controls-20.0.1-linux.jar:/opt/greenfoot/javafx-controls-20.0.1.jar:/opt/greenfoot/javafx-fxml-20.0.1-linux.jar:/opt/greenfoot/javafx-graphics-20.0.1-linux.jar:/opt/greenfoot/javafx-graphics-20.0.1.jar:/opt/greenfoot/javafx-media-20.0.1-linux.jar:/opt/greenfoot/javafx-media-20.0.1.jar:/opt/greenfoot/javafx-swing-20.0.1-linux.jar:/opt/greenfoot/javafx-web-20.0.1-linux.jar:/opt/greenfoot/junit-4.12.jar:/opt/greenfoot/junit-jupiter-5.5.2.jar:/opt/greenfoot/junit-jupiter-api-5.5.2.jar:/opt/greenfoot/junit-jupiter-engine-5.5.2.jar:/opt/greenfoot/junit-jupiter-params-5.5.2.jar:/opt/greenfoot/junit-platform-commons-1.5.2.jar:/opt/greenfoot/junit-platform-engine-1.5.2.jar:/opt/greenfoot/junit-platform-launcher-1.5.2.jar:/opt/greenfoot/junit-platform-suite-api-1.5.2.jar:/opt/greenfoot/junit-vintage-engine-5.5.2.jar:/opt/greenfoot/hamcrest-core-1.3.jar:/opt/greenfoot/opentest4j-1.2.0.jar:/opt/greenfoot/bluej.jar:/opt/greenfoot/classgraph-4.8.90.jar:/opt/greenfoot/diffutils-1.2.1.jar:/opt/greenfoot/commons-logging-1.2.jar:/opt/greenfoot/jl1.0.1.jar:/opt/greenfoot/opencsv-2.3.jar:/opt/greenfoot/opencsv-2.4.jar:/opt/greenfoot/xom-1.3.7.jar:/opt/greenfoot/lang-stride.jar:/opt/greenfoot/nsmenufx-2.1.8.jar:/opt/greenfoot/wellbehavedfx-0.3.3.jar:/opt/greenfoot/guava-17.0.jar:/opt/greenfoot/simple-png-0.2.0.jar:/opt/greenfoot/simple-png-javafx-0.2.0.jar:/opt/greenfoot/httpclient-4.5.13.jar:/opt/greenfoot/httpcore-4.4.13.jar:/opt/greenfoot/httpmime-4.1.1.jar:/opt/greenfoot/javafx/javafx.base.jar:/opt/greenfoot/javafx/javafx.controls.jar:/opt/greenfoot/javafx/javafx.fxml.jar:/opt/greenfoot/javafx/javafx.graphics.jar:/opt/greenfoot/javafx/javafx.media.jar:/opt/greenfoot/javafx/javafx.properties.jar:/opt/greenfoot/javafx/javafx.swing.jar:/opt/greenfoot/javafx/javafx.web.jar:/home/leo/Documents/School/ICS4U/VehicleSim
 -d
-/run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim/doc
+/home/leo/Documents/School/ICS4U/VehicleSim/doc
 -encoding
 UTF-8
 -charset
 UTF-8
-/run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim/UltimateBulldozer.java
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java
 <---- end of javadoc command ---->
-Loading source file /run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim/UltimateBulldozer.java...
+Loading source file /home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java...
 Constructing Javadoc information...
 warning: unknown enum constant Tag.Any
   reason: class file for threadchecker.Tag not found
 warning: unknown enum constant Tag.Any
+warning: unknown enum constant Tag.Any
+warning: unknown enum constant Tag.Any
 Standard Doclet version 17.0.10+7
 Building tree for all the packages and classes...
-Generating /run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim/doc/UltimateBulldozer.html...
-Generating /run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim/doc/package-summary.html...
-Generating /run/media/leo/ST2000/Documents/School/ICS4U/VehicleSim/doc/index.html...
-2 warnings
+Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/VehicleWorld.html...
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:13: warning: invalid input: '<'
+ * --> Includes grid <--> lane conversion method
+                     ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:299: warning: invalid input: '<'
+     *                  <=== Start Y
+                        ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:300: warning: invalid input: '<'
+     *  ||||||||||||||  <=== Top Border
+                        ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:303: warning: invalid input: '<'
+     *  |      Y[0]  |  <=== Lane Position (Y) is the middle of the lane
+                        ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:306: warning: invalid input: '<'
+     *  [##] [##] [##| <== spacing ( where the lane lines or borders are )
+                       ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:312: warning: invalid input: '<'
+     *  ||||||||||||||  <== Bottom Border
+                        ^
+Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/package-summary.html...
+Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/constant-values.html...
+Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/index.html...
+10 warnings
