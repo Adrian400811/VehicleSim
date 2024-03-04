@@ -36,4 +36,6 @@ Vehicle Sprites: [Awesome Car Pack - UnLucky Studio (Sujit Yadav)](https://unluc
 
 Explosion: [Explosion - pixelartmaker.com](https://pixelartmaker.com/art/695c3a296d3fc8c)
 
+Explosion: [Small Bomb Explosion Sound Effect](https://youtu.be/9FMquJzgDGQ)
+
 Scream: Vilhelm Scream (Internet Meme, Source Unknown)
