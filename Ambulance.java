@@ -27,11 +27,14 @@ public class Ambulance extends Vehicle
         return false;
     }
     
+    /**
+     * Check Pedestrian intersecting Ambulance
+     * If yes, check if Pedestiran is awake
+     * If not awake, save the Pedestrian (aka remove Object)
+     */
     public void killPedestrian() {
         Pedestrian p = (Pedestrian) getOneIntersectingObject(Pedestrian.class);
         
-        // this works, but doesn't ignore knocked down Pedestrians
-        //actorsTouching.addAll(pedsTouching);
         if (p != null && !p.isAwake()){
             getWorld().removeObject(p);
         }

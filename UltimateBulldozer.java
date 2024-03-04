@@ -13,36 +13,35 @@ public class UltimateBulldozer extends Actor
     private GreenfootImage image;
     protected boolean visible;
     protected VehicleSpawner origin;
-    protected World world;
     protected int height;
-    protected int width = 48;
+    protected int width;
+    protected int y;
     
     
     public UltimateBulldozer(VehicleSpawner origin) {
         this.origin = origin;
-        this.world = getWorld();
-        this.height = origin.getHeight();
-        //this.width = world.getLaneY(origin.getLaneNumber());
     }
 
-    public void addedToWorld(){
-        image = new GreenfootImage(100, 100);
+    protected void addedToWorld(World world){
+        VehicleWorld vw = (VehicleWorld)world;
+        height = origin.getHeight();
+        width = world.getWidth();
+        y = vw.getLaneY(origin.getLaneNumber());
+        setLocation(0, y);
+        image = new GreenfootImage(width, height);
         image.setColor(TRANSPARENT_RED);
-        image.fillRect(0, 0, height, width);
+        image.fillRect(0, 0, width, height);
+        setImage(image);
+        System.out.println("add "+origin.getLaneNumber()+" "+System.currentTimeMillis());
+        boom();
     }
 
-    /**
-     * Act - do whatever the UltimateBulldozer wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
-    public void act(){
+    public void boom(){
         ArrayList<Vehicle> pedsTouching = (ArrayList<Vehicle>)getIntersectingObjects(Vehicle.class);
-
-        ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
-
         for (Vehicle v : pedsTouching){
-            getWorld().removeObject(v);
+            v.explode();
         }
+        System.out.println("boom "+origin.getLaneNumber()+" "+System.currentTimeMillis());
         getWorld().removeObject(this);
     }
 }

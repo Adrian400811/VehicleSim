@@ -28,9 +28,12 @@ TL;DR: Car crashes, tow trucks, people screaming, better UI, allow customizing.
 
 ## Authors
 Original: Mr. Jordan Cohen
+
 Modified: Adrian400811
 
 ## Credits
 Vehicle Sprites: [Awesome Car Pack - UnLucky Studio (Sujit Yadav)](https://unluckystudio.com/game-art-giveaway-7-top-down-vehicles-sprites-pack/)
 
 Explosion: [Explosion - pixelartmaker.com](https://pixelartmaker.com/art/695c3a296d3fc8c)
+
+Scream: Vilhelm Scream (Internet Meme, Source Unknown)

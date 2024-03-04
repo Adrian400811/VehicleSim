@@ -24,7 +24,7 @@ public class Truck extends Vehicle
     {
         Vehicle ahead = (Vehicle) getOneObjectAtOffset (
          direction * (int)(speed + getImage().getWidth()/2 + 3), 0, Vehicle.class);
-        if(ahead != null && detectCrash(ahead)){
+        if(ahead != null){
             tow(ahead);
         }
         super.act();
