@@ -49,7 +49,7 @@ public class Pedestrian extends SuperSmoothMover
         speed = 0;
         setRotation (direction * 90);
         awake = false;
-        // scream.play();
+        scream.play();
     }
 
     /**

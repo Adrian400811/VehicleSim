@@ -19,8 +19,6 @@ public abstract class Vehicle extends SuperSmoothMover
     protected boolean towing;
     protected boolean towed;
     protected Vehicle tower;
-    protected GreenfootImage explodeImg = new GreenfootImage("images/explode.png");
-    protected GreenfootSound explodeSfx = new GreenfootSound("sounds/explode.mp3");
 
     protected abstract boolean checkHitPedestrian ();
 
@@ -46,11 +44,11 @@ public abstract class Vehicle extends SuperSmoothMover
         // does nothing).
         maxSpeed *= origin.getSpeedModifier();
         speed = maxSpeed;
-        
+
         isNew = true; // this boolean serves to make sure this Vehicle is only placed in 
-                      // it's starting position once. Vehicles are removed and re-added
-                      // to the world (instantly, not visibly) by the z-sort, and without this,
-                      // they would continue to return to their start points.
+        // it's starting position once. Vehicles are removed and re-added
+        // to the world (instantly, not visibly) by the z-sort, and without this,
+        // they would continue to return to their start points.
     }
 
     /**
@@ -76,7 +74,7 @@ public abstract class Vehicle extends SuperSmoothMover
         if (moving) {
             drive();
         }
-        
+
         if (towed) {
             if(tower != null){
                 attachTower(tower);
@@ -84,15 +82,15 @@ public abstract class Vehicle extends SuperSmoothMover
                 getWorld().removeObject(this);
             }
         }
-         
+
         if (!checkHitPedestrian()){
             repelPedestrians();
         }
-        
+
         if(checkCrash() && moving){
             crash();
         }
-        
+
         if (checkEdge()){
             getWorld().removeObject(this);
             return;
@@ -130,13 +128,16 @@ public abstract class Vehicle extends SuperSmoothMover
         }
         return false;
     }
-    
+
     public void attachTower(Vehicle tower) {
         try {
             int towX = tower.getX();
             int selfX = getX();
-            if ((direction * towX)-100 > (direction * selfX)){
-                move((direction * towX) - (direction*selfX));
+            int selfY = getY();
+            if (towX-100 != (direction * selfX) && origin.getRightwardness()){
+                setLocation(towX-100, selfY);
+            } else if (towX+100 != (direction * selfX) && !origin.getRightwardness()){
+                setLocation(towX+100, selfY);
             }
         } catch(Exception e) {
             if (e.toString() == "java.lang.IllegalStateException: Actor has been removed from the world.") {
@@ -144,7 +145,7 @@ public abstract class Vehicle extends SuperSmoothMover
             }
         }
     }
-    
+
     public void crash() {
         moving = false;
         int currentSpeed = (int) getSpeed();
@@ -154,19 +155,17 @@ public abstract class Vehicle extends SuperSmoothMover
         int carX = getX();
         int carY = getY();
     }
-    
+
     public void explode() {
-        setImage(explodeImg);
-        explodeSfx.play();
-        getWorld().removeObject(this);
+        getWorld().addObject(new VehicleExplosion(),getX(),getY());
     }
-    
+
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)
     public void repelPedestrians() {
         ArrayList<Pedestrian> pedsTouching = (ArrayList<Pedestrian>)getIntersectingObjects(Pedestrian.class);
-        
+
         ArrayList<Actor> actorsTouching = new ArrayList<Actor>();
-        
+
         // this works, but doesn't ignore knocked down Pedestrians
         //actorsTouching.addAll(pedsTouching);
         for (Pedestrian p : pedsTouching){
@@ -174,7 +173,7 @@ public abstract class Vehicle extends SuperSmoothMover
                 actorsTouching.add(p);
             }
         }
-        
+
         pushAwayFromObjects(actorsTouching, 4);
     }
 
@@ -189,7 +188,7 @@ public abstract class Vehicle extends SuperSmoothMover
         // Get the current position of this actor
         int currentX = getX();
         int currentY = getY();
-    
+
         // Iterate through the nearby objects
         for (Actor object : nearbyObjects) {
             // Get the position and bounding box of the nearby object
@@ -197,32 +196,32 @@ public abstract class Vehicle extends SuperSmoothMover
             int objectY = object.getY();
             int objectWidth = object.getImage().getWidth();
             int objectHeight = object.getImage().getHeight();
-    
+
             // Calculate the distance between this actor and the nearby object's bounding oval
             double distance = Math.sqrt(Math.pow(currentX - objectX, 2) + Math.pow(currentY - objectY, 2));
-    
+
             // Calculate the effective radii of the bounding ovals
             double thisRadius = Math.max(getImage().getWidth() / 2.0, getImage().getHeight() / 2.0);
             double objectRadius = Math.max(objectWidth / 2.0, objectHeight / 2.0);
-    
+
             // Check if the distance is less than the sum of the radii
             if (distance < (thisRadius + objectRadius + minDistance)) {
                 // Calculate the direction vector from this actor to the nearby object
                 int deltaX = objectX - currentX;
                 int deltaY = objectY - currentY;
-    
+
                 // Calculate the unit vector in the direction of the nearby object
                 double length = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
                 double unitX = deltaX / length;
                 double unitY = deltaY / length;
-    
+
                 // Calculate the amount by which to push the nearby object
                 double pushAmount = (thisRadius + objectRadius + minDistance) - distance;
-    
+
                 // Update the position of the nearby object to push it away
-                
+
                 object.setLocation(objectX, objectY + (int)(pushAmount * unitY));
-                
+
                 // 2d version, allows pushing on x and y axis, commented out for now but it works, just not the
                 // effect I'm after:
                 //object.setLocation(objectX + (int)(pushAmount * unitX), objectY + (int)(pushAmount * unitY));
@@ -248,13 +247,13 @@ public abstract class Vehicle extends SuperSmoothMover
         }
         return 0;
     }
-    
+
     public void getTowed(Vehicle towtruck) {
         towing = true;
         towed = true;
         tower = towtruck;
     }
-    
+
     public boolean isNotCrashed() {
         return moving;
     }

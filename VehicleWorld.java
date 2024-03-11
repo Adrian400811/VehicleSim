@@ -75,11 +75,11 @@ public class VehicleWorld extends World
         setBackground (background);
 
         // Set critical variables - will affect lane drawing
-        laneCount = 8;
+        laneCount = 6;
         laneHeight = 48;
         spaceBetweenLanes = 6;
-        splitAtCenter = false;
-        twoWayTraffic = false;
+        splitAtCenter = true;
+        twoWayTraffic = true;
 
         // Init lane spawner objects 
         laneSpawners = new VehicleSpawner[laneCount];
