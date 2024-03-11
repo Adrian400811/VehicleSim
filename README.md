@@ -7,7 +7,7 @@ Controlled randomize generation of vehicles and pedestrians with funny effects.
 
 ## Requirements
 Dependencies: Greenfoot, OpenJDK(>= 17)
-> You people should use terminal and stop downloading from websites. It saves time and protects you phishing sites, plus it is really not that hard.
+> You people should use a package manager and stop downloading from websites. It saves time and protects you phishing sites, plus it is really not that hard.
 ### Windows
 ```winget install GreenfootTeam.Greenfoot AdoptOpenJDK.OpenJDK.17```
 ### macOS
@@ -34,8 +34,10 @@ Modified: Adrian400811
 ## Credits
 Vehicle Sprites: [Awesome Car Pack - UnLucky Studio (Sujit Yadav)](https://unluckystudio.com/game-art-giveaway-7-top-down-vehicles-sprites-pack/)
 
-Explosion: [Explosion - pixelartmaker.com](https://pixelartmaker.com/art/695c3a296d3fc8c)
+Explosion Image: [Explosion - pixelartmaker.com](https://pixelartmaker.com/art/695c3a296d3fc8c)
 
-Explosion: [Small Bomb Explosion Sound Effect](https://youtu.be/9FMquJzgDGQ)
+Explosion Sound: [Small Bomb Explosion Sound Effect](https://youtu.be/9FMquJzgDGQ)
 
 Scream: Vilhelm Scream (Internet Meme, Source Unknown)
+
+Truck Sound: [Truck In Reverse - Beeping - Sound Effect](https://youtu.be/fRzYqsDSplg)

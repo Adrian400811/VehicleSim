@@ -16,6 +16,7 @@ public class UltimateBulldozer extends Actor
     protected int height;
     protected int width;
     protected int y;
+    protected int cooldown = 5;
     
     
     public UltimateBulldozer(VehicleSpawner origin) {
@@ -27,21 +28,24 @@ public class UltimateBulldozer extends Actor
         height = origin.getHeight();
         width = world.getWidth();
         y = vw.getLaneY(origin.getLaneNumber());
-        setLocation(0, y);
+        if (origin.getRightwardness()) {
+            setLocation(10,y);
+        } else {
+            setLocation(vw.getWidth()-10, y);
+        }
         image = new GreenfootImage(width, height);
         image.setColor(TRANSPARENT_RED);
         image.fillRect(0, 0, width, height);
         setImage(image);
-        System.out.println("add "+origin.getLaneNumber()+" "+System.currentTimeMillis());
         boom();
     }
 
     public void boom(){
-        ArrayList<Vehicle> pedsTouching = (ArrayList<Vehicle>)getIntersectingObjects(Vehicle.class);
-        for (Vehicle v : pedsTouching){
+        ArrayList<Vehicle> vehTouching = (ArrayList<Vehicle>)getIntersectingObjects(Vehicle.class);
+        for (Vehicle v : vehTouching){
             v.explode();
+            getWorld().removeObject(v);
         }
-        System.out.println("boom "+origin.getLaneNumber()+" "+System.currentTimeMillis());
         getWorld().removeObject(this);
     }
 }

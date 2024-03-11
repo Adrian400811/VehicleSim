@@ -30,6 +30,9 @@ public class VehicleSpawner extends Actor
     private boolean rightward;
     private boolean visible;
     private int height, width;
+    
+    private long currentMillis;
+    private long lastMillis = 0;
 
     public VehicleSpawner (boolean rightward, int laneHeight, int laneNumber)
     {
@@ -99,9 +102,13 @@ public class VehicleSpawner extends Actor
     }
     
     public boolean checkPileUp() {
-        Vehicle v = (Vehicle) getOneIntersectingObject(Vehicle.class);
-        if (v != null && !v.isNotCrashed()){
-            return true;
+        currentMillis = System.currentTimeMillis();
+        if (currentMillis+100 > lastMillis) {
+            lastMillis = currentMillis;
+            Vehicle v = (Vehicle) getOneIntersectingObject(Vehicle.class);
+            if (v != null && !v.isNotCrashed()){
+                return true;
+            }
         }
         return false;
     }
@@ -119,5 +126,9 @@ public class VehicleSpawner extends Actor
     
     public int getHeight(){
         return this.height;
+    }
+    
+    public boolean getRightwardness() {
+        return this.rightward;
     }
 }
