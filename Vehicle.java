@@ -257,4 +257,18 @@ public abstract class Vehicle extends SuperSmoothMover
     public boolean isNotCrashed() {
         return moving;
     }
+    
+    // switching lane stuff
+    public int checkLane() {
+        Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
+        Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
+        if(left != null && rite == null){
+            return 1;
+        } else if (left == null && rite != null){
+            return 2;
+        } else if (left != null && rite != null) {
+            return 3;
+        }
+        return 0;
+    }
 }
