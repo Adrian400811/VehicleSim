@@ -18,6 +18,16 @@ Dependencies: Greenfoot, OpenJDK(>= 17)
 #### Other distros: Flatpak (newest update seems broken)
 ```flatpak install org.greenfoot.Greenfoot```
 
+## Download
+### Using git (recommend)
+```git clone https://github.com/Adrian400811/VehicleSim```
+#### Update
+```# run in directory
+git pull```
+### Download as zip
+Press code -> zip -> download
+
+
 ## Run
 Open directory in Greenfoot, press Run
 
