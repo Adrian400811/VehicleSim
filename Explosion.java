@@ -42,6 +42,20 @@ public abstract class Explosion extends Actor
         }
     }
     
+    public void explode(int countdown, int volume){
+        this.countdown = countdown;
+        sfx.setVolume(volume);
+        actCount ++;
+        if (playing == 0) {
+            sfx.play();
+            playing = 1;
+        }
+        if (actCount > countdown && getWorld() != null) {
+            actCount = 0;
+            getWorld().removeObject(this);
+        }
+    }
+    
     public void addedToWorld(World w){
         this.sfx = sfx;
         playing = 0;

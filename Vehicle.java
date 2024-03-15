@@ -79,7 +79,7 @@ public abstract class Vehicle extends SuperSmoothMover
         Pedestrian front = (Pedestrian) getOneObjectAtOffset (20*direction, 0,Pedestrian.class);
         if (moving) {
             drive();
-            if (front != null){
+            if (Greenfoot.getRandomNumber(20) % 4 == 0){
                 changeLane(checkVehicles());
             }
         }
@@ -276,12 +276,10 @@ public abstract class Vehicle extends SuperSmoothMover
     public int checkVehicles() {
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
         Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
-        if(left != null && rite == null){
+        if(left == null && rite != null){
             return 1;
-        } else if (left == null && rite != null){
+        } else if (rite == null){
             return 2;
-        } else if (left != null && rite != null) {
-            return 3;
         }
         return 0;
     }
@@ -304,11 +302,15 @@ public abstract class Vehicle extends SuperSmoothMover
             int rLane = myLaneNumber - 1;
             if(rLane < 0){
                 return true;
+            } else {
+                myLaneNumber --;
             }
         } else {
             int rLane = myLaneNumber + 1;
-            if(rLane > laneCount-1){
+            if(rLane >= laneCount-1){
                 return true;
+            } else {
+                myLaneNumber ++;
             }
         }
         return false;
@@ -321,38 +323,34 @@ public abstract class Vehicle extends SuperSmoothMover
                 int lLane = myLaneNumber + 1;
                 if(lLane > middleLane){
                     return true;
+                } else {
+                    myLaneNumber ++;
                 }
             } else {
                 int lLane = myLaneNumber - 1;
                 if(lLane <= middleLane){
                     return true;
+                } else {
+                    myLaneNumber ++;
                 }
             }
-            return false;
         }
         return false;
     }
     
     public void changeLane(int vehicleLaneStatus){
-        int toLeft = getY()+(-changeLaneDistance*direction);
-        int toRight = getY()+(changeLaneDistance*direction);
+        VehicleWorld vw = (VehicleWorld) getWorld();
         switch(vehicleLaneStatus){
             case 1:
                 if(!checkLane(1)){
-                    setLocation(getX(), toLeft);
-                    myLaneNumber --;
+                    myLaneNumber = myLaneNumber-(1*direction);
+                    setLocation(getX(), vw.getLaneY(myLaneNumber));
                 }
                 break;
             case 2:
                 if(!checkLane(2)){
-                    setLocation(getX(), toRight);
-                    myLaneNumber ++;
-                }
-                break;
-            case 3:
-                if(!checkLane(2)){
-                    setLocation(getX(), toRight);
-                    myLaneNumber ++;
+                    myLaneNumber = myLaneNumber+(1*direction);
+                    setLocation(getX(), vw.getLaneY(myLaneNumber));
                 }
                 break;
             case 0:
