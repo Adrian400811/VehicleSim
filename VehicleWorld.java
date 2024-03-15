@@ -44,7 +44,7 @@ public class VehicleWorld extends World
     
     // Instance variables / Objects
     private boolean twoWayTraffic, splitAtCenter;
-    private int laneHeight, laneCount, spaceBetweenLanes;
+    protected int laneHeight, laneCount, spaceBetweenLanes;
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
 

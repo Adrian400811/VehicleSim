@@ -19,6 +19,7 @@ public abstract class Vehicle extends SuperSmoothMover
     protected boolean towing;
     protected boolean towed;
     protected Vehicle tower;
+    protected int changeLaneDistance;
 
     protected abstract boolean checkHitPedestrian ();
 
@@ -49,6 +50,8 @@ public abstract class Vehicle extends SuperSmoothMover
         // it's starting position once. Vehicles are removed and re-added
         // to the world (instantly, not visibly) by the z-sort, and without this,
         // they would continue to return to their start points.
+        
+        
     }
 
     /**
@@ -61,6 +64,8 @@ public abstract class Vehicle extends SuperSmoothMover
             setLocation (origin.getX() - (direction * 100), origin.getY() - yOffset);
             isNew = false;
         }
+        VehicleWorld vw = (VehicleWorld) w;
+        changeLaneDistance = origin.getHeight() + (vw.spaceBetweenLanes/2);
     }
 
     /**
@@ -73,6 +78,7 @@ public abstract class Vehicle extends SuperSmoothMover
     public void act () {
         if (moving) {
             drive();
+            changeLane(checkLane());
         }
 
         if (towed) {
@@ -95,6 +101,8 @@ public abstract class Vehicle extends SuperSmoothMover
             getWorld().removeObject(this);
             return;
         }
+        
+        
     }
 
     /**
@@ -121,44 +129,7 @@ public abstract class Vehicle extends SuperSmoothMover
         return false;
     }
 
-    public boolean checkCrash() {
-        Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
-        if (collidingObject != null && !towing){
-            return true;
-        }
-        return false;
-    }
-
-    public void attachTower(Vehicle tower) {
-        try {
-            int towX = tower.getX();
-            int selfX = getX();
-            int selfY = getY();
-            if (towX-100 != (direction * selfX) && origin.getRightwardness()){
-                setLocation(towX-100, selfY);
-            } else if (towX+100 != (direction * selfX) && !origin.getRightwardness()){
-                setLocation(towX+100, selfY);
-            }
-        } catch(Exception e) {
-            if (e.toString() == "java.lang.IllegalStateException: Actor has been removed from the world.") {
-                getWorld().removeObject(this);
-            }
-        }
-    }
-
-    public void crash() {
-        moving = false;
-        int currentSpeed = (int) getSpeed();
-        for (;currentSpeed > 0; speed += -1) {
-            move (speed * direction);
-        }
-        int carX = getX();
-        int carY = getY();
-    }
-
-    public void explode() {
-        getWorld().addObject(new VehicleExplosion(),getX(),getY());
-    }
+    
 
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)
     public void repelPedestrians() {
@@ -258,6 +229,46 @@ public abstract class Vehicle extends SuperSmoothMover
         return moving;
     }
     
+    public boolean checkCrash() {
+        Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
+        if (collidingObject != null && !towing){
+            return true;
+        }
+        return false;
+    }
+
+    public void attachTower(Vehicle tower) {
+        try {
+            int towX = tower.getX();
+            int selfX = getX();
+            int selfY = getY();
+            if (towX-100 != (direction * selfX) && origin.facesRightward()){
+                setLocation(towX-100, selfY);
+            } else if (towX+100 != (direction * selfX) && !origin.facesRightward()){
+                setLocation(towX+100, selfY);
+            }
+        } catch(Exception e) {
+            if (e.toString() == "java.lang.IllegalStateException: Actor has been removed from the world.") {
+                getWorld().removeObject(this);
+            }
+        }
+    }
+    
+    // new stuff
+    public void crash() {
+        moving = false;
+        int currentSpeed = (int) getSpeed();
+        for (;currentSpeed > 0; speed += -1) {
+            move (speed * direction);
+        }
+        int carX = getX();
+        int carY = getY();
+    }
+
+    public void explode() {
+        getWorld().addObject(new VehicleExplosion(),getX(),getY());
+    }
+    
     // switching lane stuff
     public int checkLane() {
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
@@ -270,5 +281,21 @@ public abstract class Vehicle extends SuperSmoothMover
             return 3;
         }
         return 0;
+    }
+    
+    public void changeLane(int laneStatus){
+        switch(laneStatus){
+            case 1:
+                setLocation(getX(), getY()-(-changeLaneDistance*direction));
+                break;
+            case 2:
+                setLocation(getX(), getY()-(changeLaneDistance*direction));
+                break;
+            case 3:
+                setLocation(getX(), getY()-(changeLaneDistance*direction));
+                break;
+            case 0:
+                break;
+        }
     }
 }
