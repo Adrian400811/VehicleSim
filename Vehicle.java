@@ -76,9 +76,12 @@ public abstract class Vehicle extends SuperSmoothMover
      * - subclass' act() method can invoke super.act() to call this, as is demonstrated here.
      */
     public void act () {
+        Pedestrian front = (Pedestrian) getOneObjectAtOffset (20*direction, 0,Pedestrian.class);
         if (moving) {
             drive();
-            changeLane(checkLane());
+            if (front != null){
+                changeLane(checkVehicles());
+            }
         }
 
         if (towed) {
@@ -270,7 +273,7 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     // switching lane stuff
-    public int checkLane() {
+    public int checkVehicles() {
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
         Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
         if(left != null && rite == null){
@@ -283,16 +286,74 @@ public abstract class Vehicle extends SuperSmoothMover
         return 0;
     }
     
-    public void changeLane(int laneStatus){
-        switch(laneStatus){
+    public boolean checkLane(int pendingStatus) {
+        VehicleWorld vw = (VehicleWorld) getWorld();
+        int laneCount = vw.laneCount;
+        boolean twoWay = vw.twoWayTraffic;
+        switch(pendingStatus){
             case 1:
-                setLocation(getX(), getY()-(-changeLaneDistance*direction));
+                return checkLeft(laneCount, twoWay);
+            case 2:
+                return checkRight(laneCount);
+        }
+        return false;
+    }
+    
+    public boolean checkRight(int laneCount){
+        if(direction < 0){
+            int rLane = myLaneNumber - 1;
+            if(rLane < 0){
+                return true;
+            }
+        } else {
+            int rLane = myLaneNumber + 1;
+            if(rLane > laneCount-1){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean checkLeft(int laneCount, boolean twoWay){
+        if(twoWay){
+            int middleLane = laneCount/2-1;
+            if(direction < 0){
+                int lLane = myLaneNumber + 1;
+                if(lLane > middleLane){
+                    return true;
+                }
+            } else {
+                int lLane = myLaneNumber - 1;
+                if(lLane <= middleLane){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+    
+    public void changeLane(int vehicleLaneStatus){
+        int toLeft = getY()+(-changeLaneDistance*direction);
+        int toRight = getY()+(changeLaneDistance*direction);
+        switch(vehicleLaneStatus){
+            case 1:
+                if(!checkLane(1)){
+                    setLocation(getX(), toLeft);
+                    myLaneNumber --;
+                }
                 break;
             case 2:
-                setLocation(getX(), getY()-(changeLaneDistance*direction));
+                if(!checkLane(2)){
+                    setLocation(getX(), toRight);
+                    myLaneNumber ++;
+                }
                 break;
             case 3:
-                setLocation(getX(), getY()-(changeLaneDistance*direction));
+                if(!checkLane(2)){
+                    setLocation(getX(), toRight);
+                    myLaneNumber ++;
+                }
                 break;
             case 0:
                 break;
