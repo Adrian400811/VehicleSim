@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class VehicleExplosion here.
@@ -8,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class VehicleExplosion extends Explosion
 {
+    private int radius = 60;
     /**
      * Act - do whatever the VehicleExplosion wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -21,6 +23,10 @@ public class VehicleExplosion extends Explosion
     public void act()
     {
         // Add your action code here.
+        ArrayList<Pedestrian> pNear = (ArrayList<Pedestrian>) getObjectsInRange(radius,Pedestrian.class);
+        for(Pedestrian p: pNear){
+            getWorld().removeObject(p);
+        }
         explode();
     }
     

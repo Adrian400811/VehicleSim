@@ -125,7 +125,7 @@ public class VehicleWorld extends World
             boolean bw = Greenfoot.getRandomNumber(2) == 0 ? true : false;
             int pedType = Greenfoot.getRandomNumber(2);
             if (bw){
-                addObject (new Ped1 (-1), xSpawnLocation, BOTTOM_SPAWN);
+                addObject (new Ped1 (1), xSpawnLocation, TOP_SPAWN);
             } else {
                 addObject (new Ped2 (-1), xSpawnLocation, BOTTOM_SPAWN);
             }

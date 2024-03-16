@@ -146,20 +146,6 @@ public abstract class Vehicle extends SuperSmoothMover
         }
     }
 
-    public void crash() {
-        moving = false;
-        int currentSpeed = (int) getSpeed();
-        for (;currentSpeed > 0; speed += -1) {
-            move (speed * direction);
-        }
-        int carX = getX();
-        int carY = getY();
-    }
-
-    public void explode() {
-        getWorld().addObject(new VehicleExplosion(),getX(),getY());
-    }
-
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)
     public void repelPedestrians() {
         ArrayList<Pedestrian> pedsTouching = (ArrayList<Pedestrian>)getIntersectingObjects(Pedestrian.class);
@@ -256,5 +242,113 @@ public abstract class Vehicle extends SuperSmoothMover
 
     public boolean isNotCrashed() {
         return moving;
+    }
+    
+    // new stuff
+    public void crash() {
+        moving = false;
+        int currentSpeed = (int) getSpeed();
+        for (;currentSpeed > 0; speed += -1) {
+            move (speed * direction);
+        }
+        int carX = getX();
+        int carY = getY();
+    }
+
+    public void explode() {
+        getWorld().addObject(new VehicleExplosion(),getX(),getY());
+    }
+    
+    // switching lane stuff
+    public int checkVehicles() {
+        Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
+        Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
+        if(left == null && rite != null){
+            return 1;  // no car on left
+        } else if (rite == null){
+            return 2;  // no car on right or both sides
+        }
+        return 0;  // cars on both sides
+    }
+    
+    public boolean checkLane(int pendingStatus) {
+        VehicleWorld vw = (VehicleWorld) getWorld();
+        int laneCount = vw.laneCount;
+        boolean twoWay = vw.twoWayTraffic;
+        switch(pendingStatus){
+            case 1: 
+                return checkLeft(laneCount, twoWay);
+            case 2:
+                return checkRight(laneCount);
+        }
+        return false;
+    }
+    
+    public boolean checkRight(int laneCount){
+        if(direction < 0){  // if going left
+            int rLane = myLaneNumber - 1;
+            if(rLane < 0){
+                return true;
+            } else {
+                myLaneNumber --;
+            }
+        } else {  // if not going left (going right
+            int rLane = myLaneNumber + 1;
+            if(rLane >= laneCount-1){
+                return true;
+            } else {
+                myLaneNumber ++;
+            }
+        }
+        return false;
+    }
+    
+    public boolean checkLeft(int laneCount, boolean twoWay){
+        if(twoWay){
+            int middleLane = laneCount/2-1;
+            if(direction < 0){
+                int lLane = myLaneNumber + 1;
+                if(lLane > middleLane){
+                    return true;
+                } else {
+                    myLaneNumber ++;
+                }
+            } else {
+                int lLane = myLaneNumber - 1;
+                if(lLane <= middleLane){
+                    return true;
+                } else {
+                    myLaneNumber ++;
+                }
+            }
+        } else {
+            int lLane = myLaneNumber - 1;
+            if(lLane >= laneCount-1){
+                return true;
+            } else {
+                myLaneNumber --;
+            }
+        }
+        return false;
+    }
+    
+    public void changeLane(int vehicleLaneStatus){
+        VehicleWorld vw = (VehicleWorld) getWorld();
+        switch(vehicleLaneStatus){
+            case 1:
+                if(!checkLane(1)){
+                    myLaneNumber = myLaneNumber-(1*direction);
+                    setLocation(getX(), vw.getLaneY(myLaneNumber));
+                }
+                break;
+            case 2:
+                if(!checkLane(2)){
+                    myLaneNumber = myLaneNumber+(1*direction);
+                    setLocation(getX(), vw.getLaneY(myLaneNumber));
+                }
+                break;
+            case 0:
+                break;
+        }
     }
 }
