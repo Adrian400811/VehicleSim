@@ -29,8 +29,7 @@ public abstract class Explosion extends Actor
         
     }
     
-    public void explode(int countdown){
-        this.countdown = countdown;
+    public void explode(){
         actCount ++;
         if (playing == 0) {
             sfx.play();
@@ -61,5 +60,9 @@ public abstract class Explosion extends Actor
         playing = 0;
         sfx.play();
         setImage(img);
+    }
+    
+    public void scale() {
+        
     }
 }

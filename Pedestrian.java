@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * A Pedestrian that tries to walk across the street
  */
-public class Pedestrian extends SuperSmoothMover
+public abstract class Pedestrian extends SuperSmoothMover
 {
     private double speed;
     private double maxSpeed;
@@ -28,7 +28,7 @@ public class Pedestrian extends SuperSmoothMover
     public void act()
     {
         // Awake is false if the Pedestrian is "knocked down"
-        if (awake){
+        if (awake && getWorld() != null){
             // Check in the direction I'm moving vertically for a Vehicle -- and only move if there is no Vehicle in front of me.
             if (getOneObjectAtOffset(0, (int)(direction * getImage().getHeight()/2 + (int)(direction * speed)), Vehicle.class) == null){
                 setLocation (getX(), getY() + (speed*direction));
@@ -38,7 +38,6 @@ public class Pedestrian extends SuperSmoothMover
             } else if (direction == 1 && getY() > getWorld().getHeight() - 30){
                 getWorld().removeObject(this);
             }
-
         }
     }
 

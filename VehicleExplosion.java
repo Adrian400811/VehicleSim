@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class VehicleExplosion here.
@@ -8,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class VehicleExplosion extends Explosion
 {
-    int volume = 80;
+    private int radius = 60;
     /**
      * Act - do whatever the VehicleExplosion wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -19,15 +20,14 @@ public class VehicleExplosion extends Explosion
         super.sfx = new GreenfootSound("sounds/explode.mp3");
     }
     
-    public VehicleExplosion(int countdown){
-        super();
-        this.countdown = countdown;
-    }
-    
     public void act()
     {
         // Add your action code here.
-        explode(countdown,volume);
+        ArrayList<Pedestrian> pNear = (ArrayList<Pedestrian>) getObjectsInRange(radius,Pedestrian.class);
+        for(Pedestrian p: pNear){
+            getWorld().removeObject(p);
+        }
+        explode();
     }
     
     public void addedToWorld(World w){
