@@ -50,8 +50,6 @@ public abstract class Vehicle extends SuperSmoothMover
         // it's starting position once. Vehicles are removed and re-added
         // to the world (instantly, not visibly) by the z-sort, and without this,
         // they would continue to return to their start points.
-        
-        
     }
 
     /**
@@ -131,8 +129,6 @@ public abstract class Vehicle extends SuperSmoothMover
         }
         return false;
     }
-
-    
 
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)
     public void repelPedestrians() {

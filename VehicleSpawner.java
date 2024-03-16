@@ -127,4 +127,8 @@ public class VehicleSpawner extends Actor
     public int getHeight(){
         return this.height;
     }
+    
+    public boolean getRightwardness() {
+        return this.rightward;
+    }
 }

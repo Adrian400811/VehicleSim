@@ -181,18 +181,18 @@ public abstract class SuperSmoothMover extends Actor
         cosRotation = Math.cos(Math.toRadians(preciseRotation));
         sinRotation = Math.sin(Math.toRadians(preciseRotation));
     }
-    
+
     /**
      * Set the location using exact coordinates.
-     * 
+     *
      * @param x the new x location
      * @param y the new y location
      */
-    public void setLocation(double x, double y) 
+    public void setLocation(double x, double y)
     {
         exactX = x;
         exactY = y;
-        super.setLocation((int) (x + 0.5), (int) (y + 0.5));
+        super.setLocation((int) (x + (Math.signum(x) * 0.5)), (int) (y + (Math.signum(y) * 0.5)));
     }
 
     /**
