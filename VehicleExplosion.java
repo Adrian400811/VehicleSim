@@ -18,15 +18,10 @@ public class VehicleExplosion extends Explosion
         super.sfx = new GreenfootSound("sounds/explode.mp3");
     }
     
-    public VehicleExplosion(int countdown){
-        super();
-        this.countdown = countdown;
-    }
-    
     public void act()
     {
         // Add your action code here.
-        explode(countdown);
+        explode();
     }
     
     public void addedToWorld(World w){
