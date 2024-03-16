@@ -20,10 +20,11 @@ Dependencies: Greenfoot, OpenJDK(>= 17)
 
 ## Download
 ### Using git (recommend)
-```git clone https://github.com/Adrian400811/VehicleSim```
-#### Update
-```# run in directory
-git pull```
+```git clone https://github.com/Adrian400811/VehicleSim```  
+
+Update  
+```git pull```
+
 ### Download as zip
 Press code -> zip -> download
 
