@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class VehicleExplosion extends Explosion
 {
+    int volume = 80;
     /**
      * Act - do whatever the VehicleExplosion wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -26,7 +27,7 @@ public class VehicleExplosion extends Explosion
     public void act()
     {
         // Add your action code here.
-        explode(countdown);
+        explode(countdown,volume);
     }
     
     public void addedToWorld(World w){
