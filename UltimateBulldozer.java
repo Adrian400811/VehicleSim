@@ -28,7 +28,7 @@ public class UltimateBulldozer extends Actor
         height = origin.getHeight();
         width = world.getWidth();
         y = vw.getLaneY(origin.getLaneNumber());
-        if (origin.getRightwardness()) {
+        if (origin.facesRightward()) {
             setLocation(10,y);
         } else {
             setLocation(vw.getWidth()-10, y);

@@ -19,6 +19,7 @@ public abstract class Vehicle extends SuperSmoothMover
     protected boolean towing;
     protected boolean towed;
     protected Vehicle tower;
+    protected int changeLaneDistance;
 
     protected abstract boolean checkHitPedestrian ();
 
@@ -61,6 +62,8 @@ public abstract class Vehicle extends SuperSmoothMover
             setLocation (origin.getX() - (direction * 100), origin.getY() - yOffset);
             isNew = false;
         }
+        VehicleWorld vw = (VehicleWorld) w;
+        changeLaneDistance = origin.getHeight() + (vw.spaceBetweenLanes/2);
     }
 
     /**
@@ -71,8 +74,12 @@ public abstract class Vehicle extends SuperSmoothMover
      * - subclass' act() method can invoke super.act() to call this, as is demonstrated here.
      */
     public void act () {
+        Pedestrian front = (Pedestrian) getOneObjectAtOffset (20*direction, 0,Pedestrian.class);
         if (moving) {
             drive();
+            if (Greenfoot.getRandomNumber(20) % 4 == 0){
+                changeLane(checkVehicles());
+            }
         }
 
         if (towed) {
@@ -95,6 +102,8 @@ public abstract class Vehicle extends SuperSmoothMover
             getWorld().removeObject(this);
             return;
         }
+        
+        
     }
 
     /**
@@ -119,31 +128,6 @@ public abstract class Vehicle extends SuperSmoothMover
             }
         }
         return false;
-    }
-
-    public boolean checkCrash() {
-        Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
-        if (collidingObject != null && !towing){
-            return true;
-        }
-        return false;
-    }
-
-    public void attachTower(Vehicle tower) {
-        try {
-            int towX = tower.getX();
-            int selfX = getX();
-            int selfY = getY();
-            if (towX-100 != (direction * selfX) && origin.getRightwardness()){
-                setLocation(towX-100, selfY);
-            } else if (towX+100 != (direction * selfX) && !origin.getRightwardness()){
-                setLocation(towX+100, selfY);
-            }
-        } catch(Exception e) {
-            if (e.toString() == "java.lang.IllegalStateException: Actor has been removed from the world.") {
-                getWorld().removeObject(this);
-            }
-        }
     }
 
     // The Repel Pedestrian Experiment - Currently a work in Progress (Feb 2023)
@@ -243,6 +227,31 @@ public abstract class Vehicle extends SuperSmoothMover
     public boolean isNotCrashed() {
         return moving;
     }
+
+    public boolean checkCrash() {
+        Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
+        if (collidingObject != null && !towing){
+            return true;
+        }
+        return false;
+    }
+
+    public void attachTower(Vehicle tower) {
+        try {
+            int towX = tower.getX();
+            int selfX = getX();
+            int selfY = getY();
+            if (towX-100 != (direction * selfX) && origin.facesRightward()){
+                setLocation(towX-100, selfY);
+            } else if (towX+100 != (direction * selfX) && !origin.facesRightward()){
+                setLocation(towX+100, selfY);
+            }
+        } catch(Exception e) {
+            if (e.toString() == "java.lang.IllegalStateException: Actor has been removed from the world.") {
+                getWorld().removeObject(this);
+            }
+        }
+    }
     
     // new stuff
     public void crash() {
@@ -264,11 +273,11 @@ public abstract class Vehicle extends SuperSmoothMover
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
         Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
         if(left == null && rite != null){
-            return 1;  // no car on left
+            return 1;
         } else if (rite == null){
-            return 2;  // no car on right or both sides
+            return 2;
         }
-        return 0;  // cars on both sides
+        return 0;
     }
     
     public boolean checkLane(int pendingStatus) {
@@ -276,7 +285,7 @@ public abstract class Vehicle extends SuperSmoothMover
         int laneCount = vw.laneCount;
         boolean twoWay = vw.twoWayTraffic;
         switch(pendingStatus){
-            case 1: 
+            case 1:
                 return checkLeft(laneCount, twoWay);
             case 2:
                 return checkRight(laneCount);
@@ -320,13 +329,6 @@ public abstract class Vehicle extends SuperSmoothMover
                 } else {
                     myLaneNumber ++;
                 }
-            }
-        } else {
-            int lLane = myLaneNumber - 1;
-            if(lLane >= laneCount-1){
-                return true;
-            } else {
-                myLaneNumber --;
             }
         }
         return false;
