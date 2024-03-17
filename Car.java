@@ -27,12 +27,10 @@ public class Car extends Vehicle
      */
     public boolean checkHitPedestrian () {
         Pedestrian p = (Pedestrian)getOneObjectAtOffset((int)speed + getImage().getWidth()/2, 0, Pedestrian.class);
-        if (p != null)
-        {
+        if (p != null && p.isAwake()){
             p.knockDown();
             return true;
         }
         return false;
-        
     }
 }

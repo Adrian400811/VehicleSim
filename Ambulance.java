@@ -19,22 +19,25 @@ public class Ambulance extends Vehicle
      */
     public void act()
     {
-        killPedestrian();
+        if(checkHitPedestrian()){
+            healPedestrian();
+        }
         super.act();
     }
 
     public boolean checkHitPedestrian () {
+        Pedestrian p = (Pedestrian) getOneIntersectingObject(Pedestrian.class);
+        if (p != null){
+            return true;
+        }
         return false;
     }
     
     /**
-     * Check Pedestrian intersecting Ambulance
-     * If yes, check if Pedestiran is awake
-     * If not awake, save the Pedestrian (aka remove Object)
+     * Heals pedestrian
      */
-    public void killPedestrian() {
+    public void healPedestrian() {
         Pedestrian p = (Pedestrian) getOneIntersectingObject(Pedestrian.class);
-        
         if (p != null && !p.isAwake()){
             p.healMe();
         }

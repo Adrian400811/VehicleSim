@@ -48,7 +48,7 @@ public class VehicleWorld extends World
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
     private int ped2Count = 0;
-    private int maxPed2 = 40;
+    private int maxPed2 = 30;
     private int planeCount = 0;
     
     /**
@@ -142,9 +142,8 @@ public class VehicleWorld extends World
     }
 
     /**
-     *  Given a lane number (zero-indexed), return the y position
-     *  in the centre of the lane. (doesn't factor offset, so 
-     *  watch your offset, i.e. with Bus).
+     *  Return Y value by given lane number
+     *  Does not deal with offset
      *  
      *  @param lane the lane number (zero-indexed)
      *  @return int the y position of the lane's center, or -1 if invalid
@@ -157,12 +156,7 @@ public class VehicleWorld extends World
     }
 
     /**
-     * Given a y-position, return the lane number (zero-indexed).
-     * Note that the y-position must be valid, and you should 
-     * include the offset in your calculations before calling this method.
-     * For example, if a Bus is in a lane at y=100, but is offset by -20,
-     * it is actually in the lane located at y=80, so you should send
-     * 80 to this method, not 100.
+     * Return corresponding lane number by given Y value
      * 
      * @param y - the y position of the lane the Vehicle is in
      * @return int the lane number, zero-indexed
@@ -265,10 +259,8 @@ public class VehicleWorld extends World
     }
 
     /**
-     * A z-sort method which will sort Actors so that Actors that are
-     * displayed "higher" on the screen (lower y values) will show up underneath
-     * Actors that are drawn "lower" on the screen (higher y values), creating a
-     * better perspective. 
+     * Sort Z value of actors depending on their Y value
+     * creating a better perspective.
      */
     public static void zSort (ArrayList<Actor> actorsToSort, World world){
         ArrayList<ActorContent> acList = new ArrayList<ActorContent>();
@@ -336,10 +328,16 @@ public class VehicleWorld extends World
         return prepareLanes (world, target, spawners, startY, heightPerLane, lanes, spacing, twoWay, centreSplit, spacing);
     }
     
+    /** 
+     * Set planeCount to zero
+     */
     public void resetPlaneCount(){
         planeCount = 0;
     }
     
+    /**
+     * Reduce ped2Count by 1
+     */
     public void reducePed2Count(){
         ped2Count --;
     }

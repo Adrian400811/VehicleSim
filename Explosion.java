@@ -1,10 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 /**
- * Write a description of class Explosion here.
+ * Superclass of every explosion effect.
+ * Explosion radius defined by image size.
+ * Remove all vehicles and pedestrians in radius.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Adrian Lee 
+ * @version 20240317
  */
 public abstract class Explosion extends Actor
 {
@@ -16,30 +18,29 @@ public abstract class Explosion extends Actor
     protected int actCount;
     protected int playing = 0;
     private int radius;
+    
     public Explosion(){
         img = new GreenfootImage("images/explode_low.png");
         sfx = new GreenfootSound("sounds/explode.mp3");
     }
     
-    /**
-     * Act - do whatever the Explosion wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    public void addedToWorld(World w){
+        vw = (VehicleWorld) w;
+        this.sfx = sfx;
+        playing = 0;
+        sfx.play();
+        setImage(img);
+    }
+    
     public void act()
     {
         // Add your action code here.
-        ArrayList<Vehicle> vNear = (ArrayList<Vehicle>) getObjectsInRange(radius,Vehicle.class);
-        ArrayList<Pedestrian> pNear = (ArrayList<Pedestrian>) getObjectsInRange(radius,Pedestrian.class);
-        for(Vehicle v: vNear){
-            getWorld().removeObject(v);
-        }
-        for(Pedestrian p: pNear){
-            getWorld().removeObject(p);
-            vw.reducePed2Count();
-        }
         explode();
     }
     
+    /**
+     * Play explode effect with default settings
+     */
     public void explode(){
         actCount ++;
         if (playing == 0) {
@@ -52,6 +53,13 @@ public abstract class Explosion extends Actor
         }
     }
     
+    /**
+     * Play explode effect by a custom period of time
+     * and volume
+     * 
+     * @param countdown The length of time the effect stays on screen in acts.
+     * @param volume    The amplitude of sound. (0-100)
+     */
     public void explode(int countdown, int volume){
         this.countdown = countdown;
         sfx.setVolume(volume);
@@ -64,13 +72,5 @@ public abstract class Explosion extends Actor
             actCount = 0;
             getWorld().removeObject(this);
         }
-    }
-    
-    public void addedToWorld(World w){
-        vw = (VehicleWorld) w;
-        this.sfx = sfx;
-        playing = 0;
-        sfx.play();
-        setImage(img);
     }
 }
