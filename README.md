@@ -52,3 +52,5 @@ Explosion Sound: [Small Bomb Explosion Sound Effect](https://youtu.be/9FMquJzgDG
 Scream: Vilhelm Scream (Internet Meme, Source Unknown)
 
 Truck Sound: [Truck In Reverse - Beeping - Sound Effect](https://youtu.be/fRzYqsDSplg)
+
+Passenger Plane Image: [Image by gstudioimagen on Freepik](https://www.freepik.com/free-vector/plane-flying-travel-machine_137585846.htm)
