@@ -77,9 +77,6 @@ public abstract class Vehicle extends SuperSmoothMover
         Pedestrian front = (Pedestrian) getOneObjectAtOffset (20*direction, 0,Pedestrian.class);
         if (moving) {
             drive();
-            // if (Greenfoot.getRandomNumber(20) % 4 == 0){
-                // changeLane(checkVehicles());
-            // }
         }
 
         if (towed) {
@@ -205,6 +202,14 @@ public abstract class Vehicle extends SuperSmoothMover
     public void drive() 
     {
         move (speed * direction);
+        Vehicle ahead = (Vehicle) getOneObjectAtOffset (direction * (int)(speed + getImage().getWidth()/2 + 6), 0, Vehicle.class);
+        double otherVehicleSpeed = -1;
+        if (ahead != null) {
+            otherVehicleSpeed = ahead.getSpeed();
+            if(getSpeed() > otherVehicleSpeed){
+                changeLane(checkVehicles());
+            }
+        }
     }   
 
     /**
@@ -327,7 +332,7 @@ public abstract class Vehicle extends SuperSmoothMover
                 if(lLane <= middleLane){
                     return true;
                 } else {
-                    myLaneNumber ++;
+                    myLaneNumber --;
                 }
             }
         }
