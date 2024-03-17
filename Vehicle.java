@@ -77,9 +77,9 @@ public abstract class Vehicle extends SuperSmoothMover
         Pedestrian front = (Pedestrian) getOneObjectAtOffset (20*direction, 0,Pedestrian.class);
         if (moving) {
             drive();
-            if (Greenfoot.getRandomNumber(20) % 4 == 0){
-                changeLane(checkVehicles());
-            }
+            // if (Greenfoot.getRandomNumber(20) % 4 == 0){
+                // changeLane(checkVehicles());
+            // }
         }
 
         if (towed) {
@@ -227,7 +227,7 @@ public abstract class Vehicle extends SuperSmoothMover
     public boolean isNotCrashed() {
         return moving;
     }
-    
+
     public boolean checkCrash() {
         Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
         if (collidingObject != null && !towing){
@@ -294,14 +294,14 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     public boolean checkRight(int laneCount){
-        if(direction < 0){
+        if(direction < 0){  // if going left
             int rLane = myLaneNumber - 1;
             if(rLane < 0){
                 return true;
             } else {
                 myLaneNumber --;
             }
-        } else {
+        } else {  // if not going left (going right
             int rLane = myLaneNumber + 1;
             if(rLane >= laneCount-1){
                 return true;
