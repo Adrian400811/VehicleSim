@@ -36,7 +36,7 @@ public class Ambulance extends Vehicle
         Pedestrian p = (Pedestrian) getOneIntersectingObject(Pedestrian.class);
         
         if (p != null && !p.isAwake()){
-            getWorld().removeObject(p);
+            p.healMe();
         }
     }
 }

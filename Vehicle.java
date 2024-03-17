@@ -77,9 +77,9 @@ public abstract class Vehicle extends SuperSmoothMover
         Pedestrian front = (Pedestrian) getOneObjectAtOffset (20*direction, 0,Pedestrian.class);
         if (moving) {
             drive();
-            if (Greenfoot.getRandomNumber(20) % 4 == 0){
-                changeLane(checkVehicles());
-            }
+            // if (Greenfoot.getRandomNumber(20) % 4 == 0){
+                // changeLane(checkVehicles());
+            // }
         }
 
         if (towed) {

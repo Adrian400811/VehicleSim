@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class VehicleExplosion extends Explosion
 {
-    private int radius = 60;
+    private int radius;
     /**
      * Act - do whatever the VehicleExplosion wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -18,6 +18,7 @@ public class VehicleExplosion extends Explosion
         super();
         super.img = new GreenfootImage("images/explode_low.png");
         super.sfx = new GreenfootSound("sounds/explode.mp3");
+        radius = img.getWidth();
     }
     
     public void act()
@@ -28,9 +29,5 @@ public class VehicleExplosion extends Explosion
             getWorld().removeObject(p);
         }
         explode();
-    }
-    
-    public void addedToWorld(World w){
-        
     }
 }

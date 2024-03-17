@@ -46,7 +46,7 @@ public abstract class Pedestrian extends SuperSmoothMover
      */
     public void knockDown () {
         speed = 0;
-        setRotation (direction * 90);
+        setImageRotation(270);
         awake = false;
         scream.play();
     }
@@ -56,7 +56,7 @@ public abstract class Pedestrian extends SuperSmoothMover
      */
     public void healMe () {
         speed = maxSpeed;
-        setRotation (0);
+        setImageRotation (0);
         awake = true;
     }
 

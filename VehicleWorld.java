@@ -47,7 +47,10 @@ public class VehicleWorld extends World
     protected int laneHeight, laneCount, spaceBetweenLanes;
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
-
+    private int ped2Count = 0;
+    private int maxPed2 = 40;
+    private int planeCount = 0;
+    
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -125,10 +128,16 @@ public class VehicleWorld extends World
             boolean bw = Greenfoot.getRandomNumber(2) == 0 ? true : false;
             int pedType = Greenfoot.getRandomNumber(2);
             if (bw){
-                addObject (new Ped1 (1), xSpawnLocation, TOP_SPAWN);
+                addObject (new Ped1 (1), xSpawnLocation, getLaneY(0)-50);
             } else {
-                addObject (new Ped2 (-1), xSpawnLocation, BOTTOM_SPAWN);
+                addObject (new Ped2 (-1), xSpawnLocation, getLaneY(laneCount-1)+50);
+                ped2Count ++;
             }
+        }
+        
+        if (ped2Count > maxPed2 && planeCount == 0){
+            addObject(new Plane(), -200, 100);
+            planeCount ++;
         }
     }
 
@@ -326,7 +335,14 @@ public class VehicleWorld extends World
     public static int[] prepareLanes (World world, GreenfootImage target, VehicleSpawner[] spawners, int startY, int heightPerLane, int lanes, int spacing, boolean twoWay, boolean centreSplit){
         return prepareLanes (world, target, spawners, startY, heightPerLane, lanes, spacing, twoWay, centreSplit, spacing);
     }
-
+    
+    public void resetPlaneCount(){
+        planeCount = 0;
+    }
+    
+    public void reducePed2Count(){
+        ped2Count --;
+    }
 }
 
 /**
