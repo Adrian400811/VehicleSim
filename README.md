@@ -1,4 +1,3 @@
-# Work in Progress. See \#Planning
 # VehicleSim
 VehicleSim for ICS4U. Starter code from Mr. Jordan Cohen.
 
@@ -33,9 +32,7 @@ Press code -> zip -> download
 Open directory in Greenfoot, press Run
 
 ## Planning
-See [Progress Tracker](https://github.com/Adrian400811/VehicleSim/issues/1)
-
-TL;DR: Car crashes, tow trucks, people screaming, better UI, allow customizing.
+See [Progress Tracker](https://github.com/Adrian400811/VehicleSim/issues/1)  
 
 ## Authors
 Original: Mr. Jordan Cohen

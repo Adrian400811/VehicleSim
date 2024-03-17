@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.List;
 
 /**
- * The Bus subclass
+ * The tow truck subclass
  */
 public class Truck extends Vehicle
 {
@@ -24,7 +24,7 @@ public class Truck extends Vehicle
     {
         Vehicle ahead = (Vehicle) getOneObjectAtOffset (
          direction * (int)(speed + getImage().getWidth()/2 + 3), 0, Vehicle.class);
-        if(ahead != null){
+        if(detectCrash(ahead)){
             tow(ahead);
         }
         super.act();
@@ -35,8 +35,11 @@ public class Truck extends Vehicle
         return false;
     }
     
+    /**
+     * Detect if the vehicle in front is crashed
+     */
     public boolean detectCrash(Vehicle ahead) {
-        if (ahead.checkCrash()){
+        if (ahead != null){
             return true;
         }
         return false;

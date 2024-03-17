@@ -18,7 +18,6 @@ public class UltimateBulldozer extends Actor
     protected int y;
     protected int cooldown = 5;
     
-    
     public UltimateBulldozer(VehicleSpawner origin) {
         this.origin = origin;
     }
@@ -40,6 +39,9 @@ public class UltimateBulldozer extends Actor
         boom();
     }
 
+    /**
+     * Removes all touching vehicle and play explode effects on them
+     */
     public void boom(){
         ArrayList<Vehicle> vehTouching = (ArrayList<Vehicle>)getIntersectingObjects(Vehicle.class);
         for (Vehicle v : vehTouching){

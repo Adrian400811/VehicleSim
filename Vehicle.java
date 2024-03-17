@@ -19,7 +19,7 @@ public abstract class Vehicle extends SuperSmoothMover
     protected boolean towing;
     protected boolean towed;
     protected Vehicle tower;
-    protected int changeLaneDistance;
+    private VehicleWorld vw;
 
     protected abstract boolean checkHitPedestrian ();
 
@@ -63,7 +63,6 @@ public abstract class Vehicle extends SuperSmoothMover
             isNew = false;
         }
         VehicleWorld vw = (VehicleWorld) w;
-        changeLaneDistance = origin.getHeight() + (vw.spaceBetweenLanes/2);
     }
 
     /**
@@ -223,16 +222,28 @@ public abstract class Vehicle extends SuperSmoothMover
         return 0;
     }
 
+    // new stuff
+    /**
+     * Tell the vehicle that it is being towed and by who
+     * 
+     * @param towtruck The tow truck that is towing this vehicle
+     */
     public void getTowed(Vehicle towtruck) {
         towing = true;
         towed = true;
         tower = towtruck;
     }
 
+    /**
+     * Return if the vehicle is crashed
+     */
     public boolean isNotCrashed() {
         return moving;
     }
 
+    /**
+     * Check if the vehicle is colliding with another vehicle
+     */
     public boolean checkCrash() {
         Vehicle collidingObject = (Vehicle)getOneIntersectingObject(Vehicle.class);
         if (collidingObject != null && !towing){
@@ -241,6 +252,12 @@ public abstract class Vehicle extends SuperSmoothMover
         return false;
     }
 
+    /**
+     * A method that set the location of the vehicle to some distance
+     * behind the tow truck
+     * 
+     * @param tower The tow truck that is towing this vehicle
+     */
     public void attachTower(Vehicle tower) {
         try {
             int towX = tower.getX();
@@ -258,15 +275,11 @@ public abstract class Vehicle extends SuperSmoothMover
         }
     }
     
-    // new stuff
+    /**
+     * Tell the vehicle that it crahsed
+     */
     public void crash() {
         moving = false;
-        int currentSpeed = (int) getSpeed();
-        for (;currentSpeed > 0; speed += -1) {
-            move (speed * direction);
-        }
-        int carX = getX();
-        int carY = getY();
     }
 
     public void explode() {
@@ -274,6 +287,11 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     // switching lane stuff
+    /**
+     * A method that checks if there are vehicles on the left or right
+     * Returns 1 if only no vehicle on the left
+     * Returns 2 if no vehicle on the right or both sides
+     */
     public int checkVehicles() {
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
         Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
@@ -285,20 +303,30 @@ public abstract class Vehicle extends SuperSmoothMover
         return 0;
     }
     
+    /**
+     * A method that triggers checkLeft or checkRight depending on
+     * which side the vehicle wants to go
+     * 
+     * @param pendingStatus The side where the car wants to go (1 left, 2 right)
+     */
     public boolean checkLane(int pendingStatus) {
-        VehicleWorld vw = (VehicleWorld) getWorld();
-        int laneCount = vw.laneCount;
         boolean twoWay = vw.twoWayTraffic;
         switch(pendingStatus){
             case 1:
-                return checkLeft(laneCount, twoWay);
+                return checkLeft(twoWay);
             case 2:
-                return checkRight(laneCount);
+                return checkRight();
         }
         return false;
     }
     
-    public boolean checkRight(int laneCount){
+    /**
+     * Checks if there is a lane on the right
+     * Returns true if there is not
+     * Returns false if there is
+     */
+    public boolean checkRight(){
+        int laneCount = vw.laneCount;
         if(direction < 0){  // if going left
             int rLane = myLaneNumber - 1;
             if(rLane < 0){
@@ -317,7 +345,14 @@ public abstract class Vehicle extends SuperSmoothMover
         return false;
     }
     
-    public boolean checkLeft(int laneCount, boolean twoWay){
+    /**
+     * Checks if there is a lane on the left
+     * Returns true if there is not
+     * Returns true if the lane on the left is going opposite
+     * Returns false if there is
+     */
+    public boolean checkLeft(boolean twoWay){
+        int laneCount = vw.laneCount;
         if(twoWay){
             int middleLane = laneCount/2-1;
             if(direction < 0){
@@ -339,6 +374,14 @@ public abstract class Vehicle extends SuperSmoothMover
         return false;
     }
     
+    /**
+     * A method that updates the Y value and myLaneNumber to
+     * change lane
+     * 
+     * Triggers check before changing
+     * 
+     * @param vehicleLaneStatus 1 Left is free, 2 Right is free or both sides
+     */
     public void changeLane(int vehicleLaneStatus){
         VehicleWorld vw = (VehicleWorld) getWorld();
         switch(vehicleLaneStatus){
