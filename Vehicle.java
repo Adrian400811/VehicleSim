@@ -202,12 +202,9 @@ public abstract class Vehicle extends SuperSmoothMover
     {
         move (speed * direction);
         Vehicle ahead = (Vehicle) getOneObjectAtOffset (direction * (int)(speed + getImage().getWidth()/2 + 6), 0, Vehicle.class);
-        double otherVehicleSpeed = -1;
-        if (ahead != null) {
-            otherVehicleSpeed = ahead.getSpeed();
-            if(getSpeed() > otherVehicleSpeed){
-                changeLane(checkVehicles());
-            }
+        if (ahead != null && getSpeed() > ahead.getSpeed()) {
+            int[] availableLanes = checkAvailbleLanes();
+            int[] clearLanes = laneIsClear(availableLanes);
         }
     }   
 
@@ -287,118 +284,38 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     // switching lane stuff
-    /**
-     * A method that checks if there are vehicles on the left or right
-     * Returns 1 if only no vehicle on the left
-     * Returns 2 if no vehicle on the right or both sides
-     */
-    public int checkVehicles() {
+    public int[] checkAvailbleLanes(){
+        vw = (VehicleWorld) getWorld();
+        int leftLane = myLaneNumber - (1*direction);
+        int rightLane = myLaneNumber + (1*direction);
+        int barrier;
+        int[] available = {0,0};
+        if (vw.twoWayTraffic && direction == 1){
+            barrier = vw.laneCount/2 - 1;
+        } else if (direction == -1){
+            barrier = vw.laneCount/2;
+        } else {
+            barrier = -1;
+        }
+        if (vw.getLaneY(leftLane) != -1 && leftLane != barrier){
+            available[0] = 1;
+        }
+        if (vw.getLaneY(rightLane) != -1){
+            available[1] = 1;
+        }
+        return available;
+    }
+    
+    public int[] laneIsClear(int[] availableLanes){
+        int[] clear = {0,0};
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
-        Vehicle rite = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
-        if(left == null && rite != null){
-            return 1;
-        } else if (rite == null){
-            return 2;
+        Vehicle right = (Vehicle) getOneObjectAtOffset (0,48*direction,Vehicle.class);
+        if (availableLanes[0] == 1 && left == null){
+            clear[0] = 1;
         }
-        return 0;
-    }
-    
-    /**
-     * A method that triggers checkLeft or checkRight depending on
-     * which side the vehicle wants to go
-     * 
-     * @param pendingStatus The side where the car wants to go (1 left, 2 right)
-     */
-    public boolean checkLane(int pendingStatus) {
-        boolean twoWay = vw.twoWayTraffic;
-        switch(pendingStatus){
-            case 1:
-                return checkLeft(twoWay);
-            case 2:
-                return checkRight();
+        if (availableLanes[1] == 1 && right == null){
+            clear[1] = 1;
         }
-        return false;
-    }
-    
-    /**
-     * Checks if there is a lane on the right
-     * Returns true if there is not
-     * Returns false if there is
-     */
-    public boolean checkRight(){
-        int laneCount = vw.laneCount;
-        if(direction < 0){  // if going left
-            int rLane = myLaneNumber - 1;
-            if(rLane < 0){
-                return true;
-            } else {
-                myLaneNumber --;
-            }
-        } else {  // if not going left (going right
-            int rLane = myLaneNumber + 1;
-            if(rLane >= laneCount-1){
-                return true;
-            } else {
-                myLaneNumber ++;
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * Checks if there is a lane on the left
-     * Returns true if there is not
-     * Returns true if the lane on the left is going opposite
-     * Returns false if there is
-     */
-    public boolean checkLeft(boolean twoWay){
-        int laneCount = vw.laneCount;
-        if(twoWay){
-            int middleLane = laneCount/2-1;
-            if(direction < 0){
-                int lLane = myLaneNumber + 1;
-                if(lLane > middleLane){
-                    return true;
-                } else {
-                    myLaneNumber ++;
-                }
-            } else {
-                int lLane = myLaneNumber - 1;
-                if(lLane <= middleLane){
-                    return true;
-                } else {
-                    myLaneNumber --;
-                }
-            }
-        }
-        return false;
-    }
-    
-    /**
-     * A method that updates the Y value and myLaneNumber to
-     * change lane
-     * 
-     * Triggers check before changing
-     * 
-     * @param vehicleLaneStatus 1 Left is free, 2 Right is free or both sides
-     */
-    public void changeLane(int vehicleLaneStatus){
-        VehicleWorld vw = (VehicleWorld) getWorld();
-        switch(vehicleLaneStatus){
-            case 1:
-                if(!checkLane(1)){
-                    myLaneNumber = myLaneNumber-(1*direction);
-                    setLocation(getX(), vw.getLaneY(myLaneNumber));
-                }
-                break;
-            case 2:
-                if(!checkLane(2)){
-                    myLaneNumber = myLaneNumber+(1*direction);
-                    setLocation(getX(), vw.getLaneY(myLaneNumber));
-                }
-                break;
-            case 0:
-                break;
-        }
+        return clear;
     }
 }

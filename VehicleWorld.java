@@ -149,7 +149,7 @@ public class VehicleWorld extends World
      *  @return int the y position of the lane's center, or -1 if invalid
      */
     public int getLaneY (int lane){
-        if (lane < lanePositionsY.length){
+        if (lane != -1 && lane < lanePositionsY.length){
             return lanePositionsY[lane];
         } 
         return -1;
