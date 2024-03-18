@@ -37,9 +37,11 @@ Update
 git pull
 ```
 
-### Download as zip
+### As zip
 Press code -> zip -> download
 
+### As GFAR
+Later™
 
 ## Run
 Open directory in Greenfoot, press Run
