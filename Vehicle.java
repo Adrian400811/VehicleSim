@@ -202,9 +202,10 @@ public abstract class Vehicle extends SuperSmoothMover
     {
         move (speed * direction);
         Vehicle ahead = (Vehicle) getOneObjectAtOffset (direction * (int)(speed + getImage().getWidth()/2 + 6), 0, Vehicle.class);
-        if (ahead != null && getSpeed() > ahead.getSpeed()) {
+        if (ahead != null && getSpeed() > ahead.getSpeed() && !(this instanceof Truck)){
             int[] availableLanes = checkAvailbleLanes();
             int[] clearLanes = laneIsClear(availableLanes);
+            changeLane(clearLanes);
         }
     }   
 
@@ -284,6 +285,10 @@ public abstract class Vehicle extends SuperSmoothMover
     }
     
     // switching lane stuff
+    /**
+     * Checks if there is a lane on the left and right
+     * instead of opposite lane or grass
+     */
     public int[] checkAvailbleLanes(){
         vw = (VehicleWorld) getWorld();
         int leftLane = myLaneNumber - (1*direction);
@@ -306,6 +311,11 @@ public abstract class Vehicle extends SuperSmoothMover
         return available;
     }
     
+    /**
+     * Check if there is a vehicle on the available lanes
+     * 
+     * @param availableLanes An integer array of available lanes
+     */
     public int[] laneIsClear(int[] availableLanes){
         int[] clear = {0,0};
         Vehicle left = (Vehicle) getOneObjectAtOffset (0,-48*direction,Vehicle.class);
@@ -317,5 +327,21 @@ public abstract class Vehicle extends SuperSmoothMover
             clear[1] = 1;
         }
         return clear;
+    }
+    
+    /**
+     * Set myLaneNumber and Y value to the new lane
+     * Prioritize left above right
+     * 
+     * @param clearLanes An integer array of clear lanes
+     */
+    public void changeLane(int[] clearLanes){
+        if (clearLanes[0] == 1){
+            myLaneNumber = myLaneNumber - (1*direction);
+            setLocation(getX(), vw.getLaneY(myLaneNumber));
+        } else if (clearLanes[1] == 1){
+            myLaneNumber = myLaneNumber + (1*direction);
+            setLocation(getX(), vw.getLaneY(myLaneNumber));
+        }
     }
 }
