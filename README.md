@@ -2,27 +2,40 @@
 VehicleSim for ICS4U. Starter code from Mr. Jordan Cohen.
 
 ## Purpose
-Controlled randomize generation of vehicles and pedestrians with funny effects.
+Randomized generation of vehicles and pedestrians of different functions with chaotic effects
 
 ## Requirements
 Dependencies: Greenfoot, OpenJDK(>= 17)
 > You people should use a package manager and stop downloading from websites. It saves time and protects you phishing sites, plus it is really not that hard.
 ### Windows
-```winget install GreenfootTeam.Greenfoot AdoptOpenJDK.OpenJDK.17```
+```pwsh
+winget install GreenfootTeam.Greenfoot AdoptOpenJDK.OpenJDK.17
+```
 ### macOS
-```brew install --cask openjdk@17 greenfoot```
+```zsh
+brew install --cask openjdk@17 greenfoot
+```
 ### Linux
 #### Arch Linux (btw) based (with AUR)
-```yay -S jdk17-openjdk java17-openjfx-bin greenfoot```
+```bash
+yay -S jdk17-openjdk java17-openjfx-bin greenfoot
+```
 #### Other distros: Flatpak (newest update seems broken)
-```flatpak install org.greenfoot.Greenfoot```
+```bash
+flatpak install org.greenfoot.Greenfoot
+```
 
 ## Download
 ### Using git (recommend)
-```git clone https://github.com/Adrian400811/VehicleSim```  
+Download
+```sh
+git clone https://github.com/Adrian400811/VehicleSim
+```  
 
 Update  
-```git pull```
+```sh
+git pull
+```
 
 ### Download as zip
 Press code -> zip -> download
