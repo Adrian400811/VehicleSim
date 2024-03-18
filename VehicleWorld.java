@@ -36,19 +36,13 @@ public class VehicleWorld extends World
 
     public static boolean SHOW_SPAWNERS = true;
     
-    // Set Y Positions for Pedestrians to spawn
-    public static final int TOP_SPAWN = 190; // Pedestrians who spawn on top
-    public static final int BOTTOM_SPAWN = 705; // Pedestrians who spawn on the bottom
-
-
-    
     // Instance variables / Objects
     protected boolean twoWayTraffic, splitAtCenter;
     protected int laneHeight, laneCount, spaceBetweenLanes;
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
     private int ped2Count = 0;
-    private int maxPed2 = 30;
+    private int maxPed2 = 20;
     private int planeCount = 0;
     
     /**
@@ -78,7 +72,7 @@ public class VehicleWorld extends World
         setBackground (background);
 
         // Set critical variables - will affect lane drawing
-        laneCount = 6;
+        laneCount = 7;
         laneHeight = 48;
         spaceBetweenLanes = 6;
         splitAtCenter = true;
@@ -125,9 +119,9 @@ public class VehicleWorld extends World
         // Chance to spawn a Pedestrian
         if (Greenfoot.getRandomNumber (60) == 0){
             int xSpawnLocation = Greenfoot.getRandomNumber (600) + 100; // random between 99 and 699, so not near edges
-            boolean bw = Greenfoot.getRandomNumber(2) == 0 ? true : false;
+            int bw = Greenfoot.getRandomNumber(3);
             int pedType = Greenfoot.getRandomNumber(2);
-            if (bw){
+            if (bw >= 2){
                 addObject (new Ped1 (1), xSpawnLocation, getLaneY(0)-50);
             } else {
                 addObject (new Ped2 (-1), xSpawnLocation, getLaneY(laneCount-1)+50);
