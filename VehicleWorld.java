@@ -2,28 +2,38 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.Collections;
 import java.util.ArrayList;
 /**
- * <h1>The new and vastly improved 2022 Vehicle Simulation Assignment.</h1>
- * <p> This is the first redo of the 8 year old project. Lanes are now drawn dynamically, allowing for
- *     much greater customization. Pedestrians can now move in two directions. The graphics are better
- *     and the interactions smoother.</p>
- * <p> The Pedestrians are not as dumb as before (they don't want straight into Vehicles) and the Vehicles
- *     do a somewhat better job detecting Pedestrians.</p>
+ * <h1>VehicleSim by Adrian Lee</h1>
+ * <p>Update log: Github commits<br/>
+ * Github: https://github.com/Adrian400811/VehicleSim</p>
  * 
- * Version Notes - Feb 2023
- * --> Includes grid <--> lane conversion method
- * --> Now starts with 1-way, 5 lane setup (easier)
+ * <h2>Extra features:</h2>
+ * <p>Vehicles crashes<br/>
+ * Tow truck tows vehicles in front of it<br/>
+ * Lane cleaner (UltimateBulldozer) cleans up spawner if blocked<br/>
+ * Pedestrian 1 goes to a random lane and explodes when vehicle is nearby<br/>
+ * Pedestrian 2 stopping Pedestrian 1, but 50/50 explodes<br/>
+ * Airstrike when there is too much Pedestrian 2 in the world<br/>
+ * Plane drops bomb and explode as airstrike<br/>
+ * Explosion effects for lane cleaner, pedestrian 1 and airstrike<br/>
+ * Sound effects for explosion, towing and pedestrian knockdown</p>
  * 
- * V2023_021
- * --> Improved Vehicle Repel (still work in progress)
- * --> Implemented Z-sort, disabled paint order between Pedestrians and Vehicles (looks much better now)
- * --> Implemented lane-based speed modifiers for max speed
+ * <h2>Credit:</h2>
+ * <p>Ped2.java Line 42-72 Inspired by Gevater_Tod4177 on greenfoot.org<br/>
+ * https://www.greenfoot.org/topics/4911</p>
  * 
- * V2023_04
- * --> Repel has been re-imagined and now takes the sizes of Actors into consideration better, and also only
- *     moves Actors verically. (The code to move in both dimensions is there and works but it's commented out
- *     because this is the effect I was going for).
- * --> TODO -- Improve flow to avoid Removed From World errors when a Vehicle calls super.act() and is removed there.
- * 
+ * <p>Vehicles: Awesome Car Pack - UnLucky Studio (Sujit Yadav)<br />
+ * https://unluckystudio.com/game-art-giveaway-7-top-down-vehicles-sprites-pack/</p>
+ * <p>Explosion Image: Explosion - pixelartmaker.com<br />
+ * https://pixelartmaker.com/art/695c3a296d3fc8c</p>
+ * <p>Explosion Sound: Small Bomb Explosion Sound Effect<br />
+ * https://youtu.be/9FMquJzgDGQ</p>
+ * <p>Scream: Vilhelm Scream</p>
+ * <p>Truck Sound: Truck in Reverse - Beeping - Sound Effect<br />
+ * https://youtu.be/fRzYqsDSplg</p>
+ * <p>Plane Image: Image by gstudioimagen on Freepik<br />
+ * https://www.freepik.com/free-vector/plane-flying-travel-machine_137585846.htm</p>
+ * <p>Jet Engine Sound: Sound Effect from Pixabay<br />
+ * https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34032</p>
  */
 public class VehicleWorld extends World
 {
@@ -72,7 +82,7 @@ public class VehicleWorld extends World
         setBackground (background);
 
         // Set critical variables - will affect lane drawing
-        laneCount = 7;
+        laneCount = 5;
         laneHeight = 48;
         spaceBetweenLanes = 6;
         splitAtCenter = true;

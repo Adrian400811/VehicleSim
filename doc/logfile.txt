@@ -20,9 +20,9 @@ Class documentation
 UTF-8
 -charset
 UTF-8
-/home/leo/Documents/School/ICS4U/VehicleSim/Vehicle.java
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java
 <---- end of javadoc command ---->
-Loading source file /home/leo/Documents/School/ICS4U/VehicleSim/Vehicle.java...
+Loading source file /home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java...
 Constructing Javadoc information...
 warning: unknown enum constant Tag.Any
   reason: class file for threadchecker.Tag not found
@@ -31,10 +31,31 @@ warning: unknown enum constant Tag.Any
 warning: unknown enum constant Tag.Any
 Standard Doclet version 17.0.10+7
 Building tree for all the packages and classes...
-Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/Vehicle.html...
-/home/leo/Documents/School/ICS4U/VehicleSim/Vehicle.java:150: warning: Tag @author cannot be used in method documentation.  It can only be used in the following types of documentation: overview, module, package, class/interface.
-     * @author Mr Cohen
-       ^
+Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/VehicleWorld.html...
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:36: warning: invalid input: '&utm_medium'
+ * https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34032</p>
+                                                   ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:36: warning: invalid input: '&utm_campaign'
+ * https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34032</p>
+                                                                       ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:36: warning: invalid input: '&utm_content'
+ * https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34032</p>
+                                                                                          ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:304: warning: invalid input: '<'
+     *                  <=== Start Y
+                        ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:305: warning: invalid input: '<'
+     *  ||||||||||||||  <=== Top Border
+                        ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:308: warning: invalid input: '<'
+     *  |      Y[0]  |  <=== Lane Position (Y) is the middle of the lane
+                        ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:311: warning: invalid input: '<'
+     *  [##] [##] [##| <== spacing ( where the lane lines or borders are )
+                       ^
+/home/leo/Documents/School/ICS4U/VehicleSim/VehicleWorld.java:317: warning: invalid input: '<'
+     *  ||||||||||||||  <== Bottom Border
+                        ^
 Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/package-summary.html...
 Generating /home/leo/Documents/School/ICS4U/VehicleSim/doc/index.html...
-5 warnings
+12 warnings
