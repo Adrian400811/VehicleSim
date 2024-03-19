@@ -98,8 +98,6 @@ public abstract class Vehicle extends SuperSmoothMover
             getWorld().removeObject(this);
             return;
         }
-        
-        
     }
 
     /**
@@ -280,6 +278,9 @@ public abstract class Vehicle extends SuperSmoothMover
         moving = false;
     }
 
+    /**
+     * Boom
+     */
     public void explode() {
         getWorld().addObject(new VehicleExplosion(),getX(),getY());
     }

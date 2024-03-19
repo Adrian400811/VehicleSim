@@ -2,37 +2,52 @@
 VehicleSim for ICS4U. Starter code from Mr. Jordan Cohen.
 
 ## Purpose
-Controlled randomize generation of vehicles and pedestrians with funny effects.
+Randomized generation of vehicles and pedestrians of different functions with chaotic effects
 
 ## Requirements
 Dependencies: Greenfoot, OpenJDK(>= 17)
 > You people should use a package manager and stop downloading from websites. It saves time and protects you phishing sites, plus it is really not that hard.
 ### Windows
-```winget install GreenfootTeam.Greenfoot AdoptOpenJDK.OpenJDK.17```
+```pwsh
+winget install GreenfootTeam.Greenfoot AdoptOpenJDK.OpenJDK.17
+```
 ### macOS
-```brew install --cask openjdk@17 greenfoot```
+```zsh
+brew install --cask openjdk@17 greenfoot
+```
 ### Linux
 #### Arch Linux (btw) based (with AUR)
-```yay -S jdk17-openjdk java17-openjfx-bin greenfoot```
+```bash
+yay -S jdk17-openjdk java17-openjfx-bin greenfoot
+```
 #### Other distros: Flatpak (newest update seems broken)
-```flatpak install org.greenfoot.Greenfoot```
+```bash
+flatpak install org.greenfoot.Greenfoot
+```
 
 ## Download
 ### Using git (recommend)
-```git clone https://github.com/Adrian400811/VehicleSim```  
+Download
+```sh
+git clone https://github.com/Adrian400811/VehicleSim
+```
 
-Update  
-```git pull```
+Update
+```sh
+git pull
+```
 
-### Download as zip
+### As zip
 Press code -> zip -> download
 
+### As a signal file (GFAR)
+Later™
 
 ## Run
 Open directory in Greenfoot, press Run
 
 ## Planning
-See [Progress Tracker](https://github.com/Adrian400811/VehicleSim/issues/1)  
+See [Progress Tracker](https://github.com/Adrian400811/VehicleSim/issues/1)
 
 ## Authors
 Original: Mr. Jordan Cohen
@@ -51,3 +66,6 @@ Scream: Vilhelm Scream (Internet Meme, Source Unknown)
 Truck Sound: [Truck In Reverse - Beeping - Sound Effect](https://youtu.be/fRzYqsDSplg)
 
 Passenger Plane Image: [Image by gstudioimagen on Freepik](https://www.freepik.com/free-vector/plane-flying-travel-machine_137585846.htm)
+
+
+Jet Engine Sound: [Sound Effect from Pixabay](https://pixabay.com/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=34032)

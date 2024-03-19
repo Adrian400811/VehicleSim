@@ -6,14 +6,16 @@ import java.util.List;
  */
 public class Truck extends Vehicle
 {
+    private GreenfootSound sfx;
     public Truck(VehicleSpawner origin){
         super (origin); // call the superclass' constructor first
         
         //Set up values for Bus
         maxSpeed = 1.5 + ((Math.random() * 10)/5);
         speed = maxSpeed;
-        // because the Bus graphic is tall, offset it a up (this may result in some collision check issues)
-        // yOffset = 15;
+        
+        sfx = new GreenfootSound("sounds/truckShort.wav");
+        sfx.setVolume(70);
     }
 
     /**
@@ -48,5 +50,6 @@ public class Truck extends Vehicle
     public void tow(Vehicle ahead) {
         towing = true;
         ahead.getTowed(this);
+        sfx.play();
     }
 }
