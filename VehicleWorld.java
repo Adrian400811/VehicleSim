@@ -21,6 +21,9 @@ import java.util.ArrayList;
  * <p>Ped2.java Line 42-72 Inspired by Gevater_Tod4177 on greenfoot.org<br/>
  * https://www.greenfoot.org/topics/4911</p>
  * 
+ * <p>VehicleWorld.java Line 112-117 Inspired by danpost on greenfoot.org<br />
+ * https://www.greenfoot.org/topics/57369</p>
+ * 
  * <p>Vehicles: Awesome Car Pack - UnLucky Studio (Sujit Yadav)<br />
  * https://unluckystudio.com/game-art-giveaway-7-top-down-vehicles-sprites-pack/</p>
  * <p>Explosion Image: Explosion - pixelartmaker.com<br />
@@ -54,6 +57,10 @@ public class VehicleWorld extends World
     private int ped2Count = 0;
     private int maxPed2 = 20;
     private int planeCount = 0;
+    
+    // latch lock
+    private boolean cDown;
+    private boolean settingShown;
     
     /**
      * Constructor for objects of class MyWorld.
@@ -98,11 +105,23 @@ public class VehicleWorld extends World
         laneSpawners[3].setSpeedModifier(1.4);
 
         setBackground (background);
+        addObject(new Label("C: config", 28), 100, 760);
     }
 
     public void act () {
         spawn();
         zSort ((ArrayList<Actor>)(getObjects(Actor.class)), this);
+        if (cDown != Greenfoot.isKeyDown("c")){  // inspired by danpost
+            cDown = ! cDown;
+            if(cDown){
+                if (!settingShown){
+                    addObject(new Settings(), 0, 0);
+                } else {
+                    removeObjects(getObjects(Settings.class));
+                }
+                settingShown = !settingShown;
+            }
+        }
     }
 
     private void spawn () {

@@ -56,7 +56,6 @@ public class VehicleSpawner extends Actor
             image.setFont(laneFont);
             image.drawString ("" + laneNumber, 10, (int)(height * 0.8));
             image.drawString ("" + laneNumber, width - 28, (int)(height * 0.8));
-
         }
         setImage(image);
     }
