@@ -15,7 +15,7 @@ public class Truck extends Vehicle
         speed = maxSpeed;
         
         sfx = new GreenfootSound("sounds/truckShort.wav");
-        sfx.setVolume(70);
+        sfx.setVolume(60);
     }
 
     /**
