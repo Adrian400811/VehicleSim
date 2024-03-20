@@ -51,6 +51,7 @@ public class VehicleWorld extends World
     protected int laneHeight, laneCount, spaceBetweenLanes;
     private int[] lanePositionsY;
     private VehicleSpawner[] laneSpawners;
+    private StatsBar sb;
     private int ped2Count = 0;
     private int maxPed2 = 20;
     private int planeCount = 0;
@@ -75,7 +76,7 @@ public class VehicleWorld extends World
         // sub class types) and after that, all other classes not listed
         // will be displayed in random order. 
         //setPaintOrder (Pedestrian.class, Vehicle.class); // Commented out to use Z-sort instead
-
+        
         // set up background -- If you change this, make 100% sure
         // that your chosen image is the same size as the World
         background = new GreenfootImage ("background01.png");
@@ -90,6 +91,7 @@ public class VehicleWorld extends World
 
         // Init lane spawner objects 
         laneSpawners = new VehicleSpawner[laneCount];
+        sb = new StatsBar();
 
         // Prepare lanes method - draws the lanes
         lanePositionsY = prepareLanes (this, background, laneSpawners, 232, laneHeight, laneCount, spaceBetweenLanes, twoWayTraffic, splitAtCenter);
@@ -114,6 +116,7 @@ public class VehicleWorld extends World
         
         if (Greenfoot.getRandomNumber (laneCount * 5) == 0 && 
             !laneSpawners[lane].isTouchingVehicle()){
+            sb.addVGen();
             int vehicleType = Greenfoot.getRandomNumber(4);
             if (vehicleType == 0){
                 addObject(new Car(laneSpawners[lane]), 0, 0);
@@ -177,6 +180,7 @@ public class VehicleWorld extends World
 
     public static int[] prepareLanes (World world, GreenfootImage target, VehicleSpawner[] spawners, int startY, int heightPerLane, int lanes, int spacing, boolean twoWay, boolean centreSplit, int centreSpacing)
     {
+        //world.addObject(sb, 0, 0);
         // Declare an array to store the y values as I calculate them
         int[] lanePositions = new int[lanes];
         // Pre-calculate half of the lane height, as this will frequently be used for drawing.
